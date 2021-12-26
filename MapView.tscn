@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 2.97932, 0.203703, 2.91448 )
+
+[node name="MapView" type="Spatial"]
+
+[node name="Ground" type="Spatial" parent="."]
+
+[node name="StaticBody" type="StaticBody" parent="Ground"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground/StaticBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0181657, -2.92437 )
+shape = SubResource( 1 )
