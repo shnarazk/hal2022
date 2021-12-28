@@ -1,21 +1,22 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://MapView.gd" type="Script" id=1]
+[ext_resource path="res://ProfessorJob.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.97932, 0.203703, 2.91448 )
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.737255, 0.870588, 0.705882, 1 )
+params_diffuse_mode = 1
+albedo_color = Color( 0.552941, 0.478431, 0.588235, 1 )
 
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
 
-[node name="MapView" type="Spatial"]
+[node name="JobMap" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="Ground" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0 )
 
 [node name="StaticBody" type="StaticBody" parent="Ground"]
 
@@ -24,7 +25,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0181657, -2.92437 )
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Ground/StaticBody"]
-transform = Transform( 5, 0, 0, 0, 0.1, 0, 0, 0, 5, 0, 0, -2.32228 )
+transform = Transform( 5, 0, 0, 0, 0.1, 0, 0, 0, 5.97217, -1, 0, -1 )
 mesh = SubResource( 3 )
 material/0 = null
 
@@ -32,10 +33,11 @@ material/0 = null
 transform = Transform( -0.409144, 0.856704, -0.314101, 0.329824, 0.459809, 0.824495, 0.850774, 0.233739, -0.47069, 0, 1.00067, 0 )
 shadow_enabled = true
 
-[node name="Position3D" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.491162, 0.871068, 0, -0.871068, 0.491162, 0, 0, 0 )
+[node name="CameraPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, -0.8, 0, 0.5 )
 
-[node name="Camera" type="Camera" parent="Position3D"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.18807 )
+[node name="Camera" type="Camera" parent="CameraPosition"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+size = 3.0
 
 [node name="Board" type="Spatial" parent="."]
