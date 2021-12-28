@@ -36,7 +36,7 @@ var event = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var AnualEvent = load("AnnualEvent.tscn")
+	var AnualEvent = load("Event.tscn")
 	for n in range(0, 18):
 		var e = AnualEvent.instance()
 		e.rotation.y = -n * PI / 9
@@ -45,6 +45,7 @@ func _ready():
 	period[current].active = true
 	
 func go_forward(step: int):
+	print("call professor job")
 	var new_year = false
 	period[current].deselect()
 	current += step

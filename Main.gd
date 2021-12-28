@@ -3,6 +3,12 @@ extends Spatial
 var rank = 0
 var point = 0
 var year = 0
+var age = 25
+var number_of_papers = 0
+var researcher_level = 0
+var hour = 600
+var writing_hour = 0
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -19,7 +25,6 @@ func _ready():
 #func _process(delta):
 #	pass
 
-
 func _on_Button_pressed():
 	$EventHappened/EventDisplayTimer.stop()
 	$EventHappened.hide()
@@ -34,7 +39,12 @@ func _on_Button_pressed():
 		$GameSpace/ProfessorLife.go_forward(step)
 
 func _on_event_happened(priority, message):
-	$EventHappened.display(message)
+	# print(message)	# return
+	$EventHappened.display(message["id"])
+	# print("event handler: %s" % message)
+	if message["type"] == "univ":
+		hour -= message["hour"]
+		update_research_hour()
 	point += priority
 	if 10 < point and rank == 0:
 		rank = 1
@@ -44,3 +54,7 @@ func _on_event_happened(priority, message):
 			e.upgrade()
 		$GameSpace/ProfessorLife.show()
 		$StatusReport.display("教授になりました")
+		
+func update_research_hour():
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % hour
+	$RsearchPanel/Panel/Resource/Resource

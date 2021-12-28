@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://AnnualEvent.gd" type="Script" id=1]
-[ext_resource path="res://BasicEvent.tres" type="Material" id=2]
+[ext_resource path="res://BasicEvent.tres" type="Material" id=1]
+[ext_resource path="res://Event.gd" type="Script" id=2]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -11,7 +11,7 @@ subdivide_height = 1
 subdivide_depth = 1
 
 [node name="JobMap" type="Spatial"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="Cell" type="StaticBody" parent="."]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
@@ -21,4 +21,4 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Cell"]
 mesh = SubResource( 2 )
-material/0 = ExtResource( 2 )
+material/0 = ExtResource( 1 )
