@@ -9,12 +9,12 @@
 [node name="AnnualEvent" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="StaticBody" type="StaticBody" parent="."]
+[node name="Cell" type="StaticBody" parent="."]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Cell"]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
+[node name="MeshInstance" type="MeshInstance" parent="Cell"]
 mesh = SubResource( 2 )
 material/0 = null
