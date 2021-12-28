@@ -1,14 +1,41 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://MapView.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.97932, 0.203703, 2.91448 )
 
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.737255, 0.870588, 0.705882, 1 )
+
+[sub_resource type="CubeMesh" id=3]
+material = SubResource( 2 )
+
 [node name="MapView" type="Spatial"]
+script = ExtResource( 1 )
 
 [node name="Ground" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
 
 [node name="StaticBody" type="StaticBody" parent="Ground"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Ground/StaticBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0181657, -2.92437 )
 shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Ground/StaticBody"]
+transform = Transform( 5, 0, 0, 0, 0.1, 0, 0, 0, 5, 0, 0, -2.32228 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.409144, 0.856704, -0.314101, 0.329824, 0.459809, 0.824495, 0.850774, 0.233739, -0.47069, 0, 1.00067, 0 )
+shadow_enabled = true
+
+[node name="Position3D" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.491162, 0.871068, 0, -0.871068, 0.491162, 0, 0, 0 )
+
+[node name="Camera" type="Camera" parent="Position3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.18807 )
+
+[node name="Board" type="Spatial" parent="."]
