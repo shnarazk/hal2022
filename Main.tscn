@@ -161,8 +161,118 @@ margin_bottom = -582.0
 [node name="ResearchPanel" parent="." instance=ExtResource( 10 )]
 margin_left = 78.0
 margin_top = 441.0
-margin_right = -1117.0
+margin_right = -1102.0
 margin_bottom = -140.0
+
+[node name="Console" type="Panel" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -105.0
+theme = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="Console"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -260.0
+margin_top = -32.5
+margin_right = -40.0
+margin_bottom = 33.5
+theme = SubResource( 2 )
+text = "次に進む"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level1Button" type="Button" parent="Console"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 100.0
+margin_top = -32.5
+margin_right = 400.0
+margin_bottom = 33.5
+rect_min_size = Vector2( 300, 0 )
+theme = SubResource( 2 )
+text = "Lv1論文を書く"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level2Button" type="Button" parent="Console"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -32.5
+margin_bottom = 33.5
+rect_min_size = Vector2( 300, 0 )
+theme = SubResource( 2 )
+text = "Lv2論文を書く"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level3Button" type="Button" parent="Console"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -700.0
+margin_top = -32.5
+margin_right = -400.0
+margin_bottom = 33.5
+rect_min_size = Vector2( 300, 0 )
+theme = SubResource( 2 )
+text = "Lv3論文を書く"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level4Button" type="Button" parent="Console"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -525.0
+margin_top = -29.5
+margin_right = -296.0
+margin_bottom = 36.5
+theme = SubResource( 2 )
+text = "論文を書く"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level5Button" type="Button" parent="Console"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -769.0
+margin_top = -29.5
+margin_right = -540.0
+margin_bottom = 36.5
+theme = SubResource( 2 )
+text = "論文を書く"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="EventHappened" type="RichTextLabel" parent="."]
 anchor_left = 0.5
@@ -188,56 +298,15 @@ __meta__ = {
 wait_time = 4.0
 one_shot = true
 
-[node name="Console" type="Panel" parent="."]
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -105.0
-theme = SubResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StartButton" type="Button" parent="Console"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -260.0
-margin_top = -33.0
-margin_right = -40.0
-margin_bottom = 33.0
-theme = SubResource( 2 )
-text = "次に進む"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StartButton2" type="Button" parent="Console"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 110.0
-margin_top = -33.0
-margin_right = 243.0
-margin_bottom = 33.0
-theme = SubResource( 2 )
-text = "PAUSE"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="StatusReport" type="RichTextLabel" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -251.0
-margin_top = 343.0
-margin_right = 496.0
-margin_bottom = 426.0
+margin_left = -257.0
+margin_top = 316.0
+margin_right = 490.0
+margin_bottom = 399.0
 rect_min_size = Vector2( 200, 60 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -258,7 +327,11 @@ one_shot = true
 [connection signal="pressed" from="OpeningPanel/StartButton2" to="." method="_on_Button_pressed"]
 [connection signal="event_happened" from="GameSpace/AssistantLife" to="." method="_on_event_happened"]
 [connection signal="event_happened" from="GameSpace/ProfessorLife" to="." method="_on_event_happened"]
-[connection signal="timeout" from="EventHappened/EventDisplayTimer" to="EventHappened" method="_on_EventDisplayTimer_timeout"]
 [connection signal="pressed" from="Console/StartButton" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Console/StartButton2" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Console/Level1Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Console/Level2Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Console/Level3Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Console/Level4Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Console/Level5Button" to="." method="_on_Button_pressed"]
+[connection signal="timeout" from="EventHappened/EventDisplayTimer" to="EventHappened" method="_on_EventDisplayTimer_timeout"]
 [connection signal="timeout" from="StatusReport/EventDisplayTimer" to="StatusReport" method="_on_EventDisplayTimer_timeout"]

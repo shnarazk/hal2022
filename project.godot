@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="Hal 2022"
+config/description="IT研究者キャリアデザインボードゲーム"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 

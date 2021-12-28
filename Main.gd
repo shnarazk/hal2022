@@ -8,6 +8,12 @@ var number_of_papers = 0
 var researcher_level = 0
 var hour = 600
 var writing_hour = 0
+var number_of_students = 0
+var number_of_postdocs = 0
+var university = "T大"
+var level_in_university = 1
+var level_in_society = 1
+var step = 0
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -20,6 +26,9 @@ func _ready():
 	$EventHappened.hide()
 	$StatusReport.hide()
 	$GameSpace/ProfessorLife.hide()
+	$Console/Level1Button.disabled = true
+	$Console/Level2Button.disabled = true
+	$Console/Level3Button.disabled = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -28,15 +37,29 @@ func _ready():
 func _on_Button_pressed():
 	$EventHappened/EventDisplayTimer.stop()
 	$EventHappened.hide()
-	var step = int((rand_range(0, 3.3) * rand_range(0, 3.3)) / 3  + 1)
+	var s = int((rand_range(0, 3.3) * rand_range(0, 3.3)) / 3  + 1)
+	step += s
+	$Console/Level1Button.disabled = true
+	$Console/Level2Button.disabled = true
+	$Console/Level3Button.disabled = true
+	if 2 <= step:
+		writing_hour += hour
+		step = 0
+		hour = 600
+		if 800 < writing_hour:
+			$Console/Level1Button.disabled = false
+		if 1700 < writing_hour:
+			$Console/Level2Button.disabled = false
+		if 3500 < writing_hour:
+			$Console/Level3Button.disabled = false
 	if rank == 0:
-		var new_year = $GameSpace/AssistantLife.go_forward(step)
+		var new_year = $GameSpace/AssistantLife.go_forward(s)
 		if new_year:
 			year += 1
 			$StatusReport.display("研究者になって%s年が経ちました" %  year)
 			print(year)
 	else:
-		$GameSpace/ProfessorLife.go_forward(step)
+		$GameSpace/ProfessorLife.go_forward(s)
 
 func _on_event_happened(priority, message):
 	# print(message)	# return
@@ -48,13 +71,24 @@ func _on_event_happened(priority, message):
 	point += priority
 	if 10 < point and rank == 0:
 		rank = 1
-		point = 0		
+		point = 0
 		$GameSpace/AssistantLife.hide()
 		for e in $GameSpace/ProfessorLife.period:
 			e.upgrade()
 		$GameSpace/ProfessorLife.show()
 		$StatusReport.display("教授になりました")
-		
+
 func update_research_hour():
+	hour += number_of_students * 50
+	$ResearchPanel/Panel/Resource/TimeTable/Team/Student.text = "%s(%s人)" % [number_of_students, number_of_students * 50]
+	hour += number_of_postdocs * 50
+	$ResearchPanel/Panel/Resource/TimeTable/Team/PostDoc.text = "%s(%s人)" % [number_of_postdocs, number_of_postdocs * 50]
+	hour -= level_in_university * 40
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/JobForUniv.text = "%s" % (level_in_university * -40)
+	hour -= level_in_society * 40
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/JobForSoc.text = "%s" % (level_in_society * -40)
+	if hour < 0:
+		writing_hour += hour
+		hour = 0
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % hour
 	$RsearchPanel/Panel/Resource/Resource
