@@ -1,10 +1,13 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://font/NotoSansCJKjp-DemiLight.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://art/button-bg.svg" type="Texture" id=3]
 [ext_resource path="res://ProfessorJob.tscn" type="PackedScene" id=4]
 [ext_resource path="res://AssistantJob.tscn" type="PackedScene" id=5]
+[ext_resource path="res://StatusPanel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://EventHappened.gd" type="Script" id=7]
+[ext_resource path="res://StatusReport.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=7]
 font_data = ExtResource( 1 )
@@ -14,7 +17,7 @@ texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 356, 92 )
 
 [sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.431373, 0.611765, 0.603922, 0.643137 )
+bg_color = Color( 0.368627, 0.384314, 0.796078, 1 )
 
 [sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 1 )
@@ -33,6 +36,20 @@ font_data = ExtResource( 1 )
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
 
+[sub_resource type="SpatialMaterial" id=14]
+albedo_color = Color( 0.454902, 0.592157, 0.52549, 1 )
+
+[sub_resource type="CubeMesh" id=15]
+material = SubResource( 14 )
+size = Vector3( 10, 0.1, 10 )
+
+[sub_resource type="BoxShape" id=16]
+
+[sub_resource type="DynamicFont" id=13]
+size = 82
+extra_spacing_char = 2
+font_data = ExtResource( 1 )
+
 [sub_resource type="DynamicFont" id=9]
 size = 44
 font_data = ExtResource( 1 )
@@ -50,6 +67,10 @@ default_font = SubResource( 12 )
 RichTextLabel/colors/default_color = Color( 0.713726, 0.14902, 0.14902, 1 )
 RichTextLabel/fonts/normal_font = SubResource( 9 )
 RichTextLabel/styles/normal = SubResource( 10 )
+
+[sub_resource type="DynamicFont" id=17]
+size = 30
+font_data = ExtResource( 1 )
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 2 )
@@ -93,6 +114,69 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GameSpace" type="Spatial" parent="."]
+
+[node name="Ground" type="StaticBody" parent="GameSpace"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="GameSpace/Ground"]
+mesh = SubResource( 15 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="GameSpace/Ground"]
+shape = SubResource( 16 )
+
+[node name="Spatial" type="Spatial" parent="GameSpace"]
+
+[node name="Logo" type="Label" parent="GameSpace/Spatial"]
+margin_left = 571.0
+margin_top = 700.0
+margin_right = 1604.0
+margin_bottom = 823.0
+rect_rotation = -33.0
+custom_colors/font_color = Color( 1, 1, 1, 0.156863 )
+custom_fonts/font = SubResource( 13 )
+text = "Happy Academic Life 2022"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AssistantLife" parent="GameSpace" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.3, 0.5 )
+
+[node name="ProfessorLife" parent="GameSpace" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.4, 0.6 )
+
+[node name="StatusPanel" parent="." instance=ExtResource( 6 )]
+margin_left = 74.0
+margin_top = 441.0
+margin_right = -1121.0
+margin_bottom = -140.0
+
+[node name="EventHappened" type="RichTextLabel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -99.0
+margin_top = -115.0
+margin_right = 464.0
+margin_bottom = -32.0
+rect_min_size = Vector2( 200, 60 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = SubResource( 11 )
+text = "イベント通知ラベル"
+scroll_active = false
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EventDisplayTimer" type="Timer" parent="EventHappened"]
+wait_time = 4.0
+one_shot = true
+
 [node name="Console" type="Panel" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
@@ -134,39 +218,36 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ProfessorLife" parent="." instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
-
-[node name="EventHappened" type="RichTextLabel" parent="."]
+[node name="StatusReport" type="RichTextLabel" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -99.0
-margin_top = -115.0
-margin_right = 464.0
-margin_bottom = -32.0
+margin_left = -251.0
+margin_top = 343.0
+margin_right = 496.0
+margin_bottom = 426.0
 rect_min_size = Vector2( 200, 60 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource( 11 )
-text = "イベント通知ラベル"
+custom_fonts/normal_font = SubResource( 17 )
+text = "状況報告ラベル"
 scroll_active = false
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EventDisplayTimer" type="Timer" parent="EventHappened"]
-wait_time = 4.0
+[node name="EventDisplayTimer" type="Timer" parent="StatusReport"]
+wait_time = 2.0
 one_shot = true
-
-[node name="AssistantLife" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -0.5 )
 
 [connection signal="pressed" from="OpeningPanel/StartButton" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="OpeningPanel/StartButton2" to="." method="_on_Button_pressed"]
+[connection signal="event_happened" from="GameSpace/AssistantLife" to="." method="_on_event_happened"]
+[connection signal="event_happened" from="GameSpace/ProfessorLife" to="." method="_on_event_happened"]
+[connection signal="timeout" from="EventHappened/EventDisplayTimer" to="EventHappened" method="_on_EventDisplayTimer_timeout"]
 [connection signal="pressed" from="Console/StartButton" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Console/StartButton2" to="." method="_on_Button_pressed"]
-[connection signal="event_happened" from="ProfessorLife" to="." method="_on_event_happened"]
-[connection signal="timeout" from="EventHappened/EventDisplayTimer" to="." method="_on_EventDisplayTimer_timeout"]
-[connection signal="event_happened" from="AssistantLife" to="." method="_on_event_happened"]
+[connection signal="timeout" from="StatusReport/EventDisplayTimer" to="StatusReport" method="_on_EventDisplayTimer_timeout"]
