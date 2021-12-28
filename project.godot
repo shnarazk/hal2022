@@ -8,6 +8,28 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Researcher",
+"class": "Assistant",
+"language": "GDScript",
+"path": "res://AssistantJob.gd"
+}, {
+"base": "Researcher",
+"class": "Professor",
+"language": "GDScript",
+"path": "res://ProfessorJob.gd"
+}, {
+"base": "Node",
+"class": "Researcher",
+"language": "GDScript",
+"path": "res://Researcher.gd"
+} ]
+_global_script_class_icons={
+"Assistant": "",
+"Professor": "",
+"Researcher": ""
+}
+
 [application]
 
 config/name="Hal 2022"

@@ -159,10 +159,10 @@ margin_right = -1084.0
 margin_bottom = -582.0
 
 [node name="ResearchPanel" parent="." instance=ExtResource( 10 )]
-margin_left = 78.0
-margin_top = 441.0
-margin_right = -1102.0
-margin_bottom = -140.0
+margin_left = 81.0
+margin_top = 473.0
+margin_right = -1084.0
+margin_bottom = -153.0
 
 [node name="Console" type="Panel" parent="."]
 anchor_top = 1.0
@@ -328,9 +328,9 @@ one_shot = true
 [connection signal="event_happened" from="GameSpace/AssistantLife" to="." method="_on_event_happened"]
 [connection signal="event_happened" from="GameSpace/ProfessorLife" to="." method="_on_event_happened"]
 [connection signal="pressed" from="Console/StartButton" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Console/Level1Button" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Console/Level2Button" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Console/Level3Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Console/Level1Button" to="." method="_on_Level1Button_pressed"]
+[connection signal="pressed" from="Console/Level2Button" to="." method="_on_Level2Button_pressed"]
+[connection signal="pressed" from="Console/Level3Button" to="." method="_on_Level3Button_pressed"]
 [connection signal="pressed" from="Console/Level4Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Console/Level5Button" to="." method="_on_Button_pressed"]
 [connection signal="timeout" from="EventHappened/EventDisplayTimer" to="EventHappened" method="_on_EventDisplayTimer_timeout"]

@@ -14,6 +14,7 @@ var university = "T大"
 var level_in_university = 1
 var level_in_society = 1
 var step = 0
+var event_hour = 0
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -29,6 +30,7 @@ func _ready():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
+	update_research_hour()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -46,11 +48,12 @@ func _on_Button_pressed():
 		writing_hour += hour
 		step = 0
 		hour = 600
-		if 800 < writing_hour:
+		event_hour = 0
+		if 950 < writing_hour:
 			$Console/Level1Button.disabled = false
-		if 1700 < writing_hour:
+		if 1500 < writing_hour:
 			$Console/Level2Button.disabled = false
-		if 3500 < writing_hour:
+		if 2200 < writing_hour:
 			$Console/Level3Button.disabled = false
 	if rank == 0:
 		var new_year = $GameSpace/AssistantLife.go_forward(s)
@@ -62,11 +65,12 @@ func _on_Button_pressed():
 		$GameSpace/ProfessorLife.go_forward(s)
 
 func _on_event_happened(priority, message):
-	# print(message)	# return
+	# print(message)
+	# return
 	$EventHappened.display(message["id"])
 	# print("event handler: %s" % message)
 	if message["type"] == "univ":
-		hour -= message["hour"]
+		event_hour += message["hour"]
 		update_research_hour()
 	point += priority
 	if 10 < point and rank == 0:
@@ -83,6 +87,7 @@ func update_research_hour():
 	$ResearchPanel/Panel/Resource/TimeTable/Team/Student.text = "%s(%s人)" % [number_of_students, number_of_students * 50]
 	hour += number_of_postdocs * 50
 	$ResearchPanel/Panel/Resource/TimeTable/Team/PostDoc.text = "%s(%s人)" % [number_of_postdocs, number_of_postdocs * 50]
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/Time.text = "%s" % (hour - event_hour)
 	hour -= level_in_university * 40
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/JobForUniv.text = "%s" % (level_in_university * -40)
 	hour -= level_in_society * 40
@@ -90,5 +95,30 @@ func update_research_hour():
 	if hour < 0:
 		writing_hour += hour
 		hour = 0
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % hour
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % (hour - event_hour)
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/WritingTime.text = "%s" % writing_hour
 	$RsearchPanel/Panel/Resource/Resource
+
+func _on_Level1Button_pressed():
+	$Console/Level1Button.disabled = true
+	$Console/Level2Button.disabled = true
+	$Console/Level3Button.disabled = true
+	writing_hour = 0
+	update_research_hour()
+	$StatusReport.display("論文を投稿しました")
+
+func _on_Level2Button_pressed():
+	$Console/Level1Button.disabled = true
+	$Console/Level2Button.disabled = true
+	$Console/Level3Button.disabled = true
+	writing_hour = 0
+	update_research_hour()
+	$StatusReport.display("論文を投稿しました")
+
+func _on_Level3Button_pressed():
+	$Console/Level1Button.disabled = true
+	$Console/Level2Button.disabled = true
+	$Console/Level3Button.disabled = true
+	writing_hour = 0
+	update_research_hour()
+	$StatusReport.display("論文を投稿しました")	
