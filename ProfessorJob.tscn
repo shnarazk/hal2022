@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ProfessorJob.gd" type="Script" id=1]
+[ext_resource path="res://art/logo.glb" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2.97932, 0.203703, 2.91448 )
@@ -43,3 +44,6 @@ projection = 1
 size = 2.8
 
 [node name="Board" type="Spatial" parent="."]
+
+[node name="logo" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.433013, 0, 0.25, 0, 0.5, 0, -0.25, 0, 0.433013, -2, -0.19, 2 )

@@ -46,7 +46,7 @@ func year_end():
 	number_of_postdocs = 0
 	number_of_students = 0
 	var promoted = false
-	if 10 < skill_level and rank == 0:
+	if -10 < skill_level and rank == 0:
 		rank = 1
 		level_in_university += 1
 		level_in_society += 1

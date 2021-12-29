@@ -134,6 +134,7 @@ shape = SubResource( 16 )
 [node name="Spatial" type="Spatial" parent="GameSpace"]
 
 [node name="Logo" type="Label" parent="GameSpace/Spatial"]
+visible = false
 margin_left = 571.0
 margin_top = 700.0
 margin_right = 1604.0

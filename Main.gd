@@ -67,8 +67,6 @@ func year_end():
 		2:
 			$StatusReport.display(ret["message"])
 			$GameSpace/AssistantLife.hide()
-			for e in $GameSpace/ProfessorLife.period:
-				e.upgrade()
 			$GameSpace/ProfessorLife.show()
 
 func update_research_hour():
