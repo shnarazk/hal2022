@@ -2,10 +2,12 @@ extends Spatial
 
 var player = load("model/Player.gd").new()
 var step = 0
+var weeks = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+	$ResearchPanel.hide()
 	$Console/EventHappened.hide()
 	$Console/StatusReport.hide()
 	$GameSpace/ProfessorStage.hide()
@@ -24,11 +26,16 @@ func _on_Button_pressed():
 	$Console/EventHappened.hide()
 	var s = int((rand_range(0, 3.3) * rand_range(0, 3.3)) / 3  + 1)
 	step += s
+	weeks += s
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
-	if 2 <= step:
+	var paper_work = null
+	if 2 <= weeks:
+		weeks = 0
+		$ResearchPanel.show()
 		player.turn_end()
+		paper_work = player.update_submission()
 		var sl = player.submittable()
 		if 0 < sl:
 			$Console/Level1Button.disabled = false
@@ -36,8 +43,9 @@ func _on_Button_pressed():
 			$Console/Level2Button.disabled = false
 		if 2 < sl:
 			$Console/Level3Button.disabled = false
+	else:
+		$ResearchPanel.hide()
 	var new_year = false
-	var paper_work = player.update_submission()
 	if player.rank == 0:
 		new_year = $GameSpace/AssistantStage.go_forward(s, player, paper_work)
 	else:
@@ -52,6 +60,7 @@ func _on_event_happened(event):
 		$Console/EventHappened.display(event["id"] + "かも")
 	else:
 		$Console/EventHappened.display(event["id"])
+		player.accept_proposal(event)
 	if event.has("type") and event["type"] == "univ":
 		player.event_hour += event["hour"]
 		player.event_hour += event["hour"]
@@ -76,8 +85,8 @@ func year_end():
 
 func update_research_hour():
 	player.update_research_hour()
-	$ResearchPanel/Panel/Resource/TimeTable/Team/Student.text = "%s(%s人)" % [player.number_of_students, player.number_of_students * 50]
-	$ResearchPanel/Panel/Resource/TimeTable/Team/PostDoc.text = "%s(%s人)" % [player.number_of_postdocs, player.number_of_postdocs * 50]
+	$ResearchPanel/Panel/Resource/TimeTable/Team/Student.text = "%s(%s人)" % [player.number_of_students * 50, player.number_of_students]
+	$ResearchPanel/Panel/Resource/TimeTable/Team/PostDoc.text = "%s(%s人)" % [player.number_of_postdocs * 100, player.number_of_postdocs]
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/Time.text = "%s" % (player.hour - player.event_hour)
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/JobForUniv.text = "%s" % (player.level_in_university * -40)
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/JobForSoc.text = "%s" % (player.level_in_society * -40)

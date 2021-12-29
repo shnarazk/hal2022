@@ -29,8 +29,8 @@ var my_scheduled_event = [
 	null,
 	null,
 	# 4月
-	{ "id": "4月卒論生対応", "effect": [{ "type": "hour", "value": 50 }, { "type": "number_o_student", "value": 1 }] },
-	{ "id": "5月卒論生対応", "effect": [{ "type": "hour", "value": 50 }, { "type": "number_o_student", "value": 1 }] },
+	{ "id": "4月卒論生対応", "effect": [{ "type": "hour", "value": 50 }, { "type": "number_of_student", "value": 1 }] },
+	{ "id": "5月卒論生対応", "effect": [{ "type": "hour", "value": 50 }, { "type": "number_of_student", "value": 1 }] },
 	{ "id": "6月修士論文指導", "type": "univ", "hour": 100 },
 	null,
 	null,

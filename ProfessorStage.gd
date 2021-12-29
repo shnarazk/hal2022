@@ -26,11 +26,11 @@ var my_scheduled_event = [
 	# 1月
 	{ "id": "1月大学入試監督", "type": "univ", "hour": 10 },
 	{ "id": "2月学位諮問会", "type": "univ", "hour": 10 },
-	null,
+	{ "id": "3月ポスドク採用", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_of_postdoc", "value": 1 }] },
 	null,
 	# 4月
-	{ "id": "4月卒論生対応", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_o_student", "value": 2 }] },
-	{ "id": "5月卒論生対応", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_o_student", "value": 2 }] },
+	{ "id": "4月卒論生対応", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_of_student", "value": 2 }] },
+	{ "id": "5月卒論生対応", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_of_student", "value": 2 }] },
 	null,
 	null,
 	null,
@@ -42,7 +42,7 @@ var my_scheduled_event = [
 	null,
 	{ "id": "10月大学入試問題作成委員", "type": "univ", "hour": 200 },
 	null,
-	null,
+	{ "id": "12月ポスドク採用", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_of_postdoc", "value": 1 }] },
 	null,
 	]
 

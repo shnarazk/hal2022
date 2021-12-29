@@ -33,6 +33,16 @@ func turn():
 	pass
 
 func accept_proposal(event):
+	for effect in event.get("effect", []):
+		match effect.get("type", ""):
+			"hour": event_hour += effect.get("value", 0)
+			"number_of_student": number_of_students += effect.get("value", 0)
+			"number_of_postdoc": number_of_postdocs += effect.get("value", 0)
+			"money": money += effect.get("value", 0)
+			"connection_point": connection_point += effect.get("value", 0)
+			"university_point": university_point += effect.get("value", 0)
+			"society_point": contribution_point += effect.get("value", 0)
+			_: print(effect)
 	pass
 
 func reject_proposal(event):
