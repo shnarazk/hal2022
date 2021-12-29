@@ -41,6 +41,8 @@ func year_end():
 		money += kaken["money"]
 	else:
 		kaken["money"] = 0
+	contribution_point += 10 * number_of_postdocs
+	contribution_point += number_of_students
 	number_of_postdocs = 0
 	number_of_students = 0
 	var promoted = false

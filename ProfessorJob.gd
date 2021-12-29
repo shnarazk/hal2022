@@ -29,8 +29,8 @@ var my_scheduled_event = [
 	null,
 	null,
 	# 4月
-	null,
-	null,
+	{ "id": "4月卒論生対応", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_o_student", "value": 2 }] },
+	{ "id": "5月卒論生対応", "effect": [{ "type": "hour", "value": 40 }, { "type": "number_o_student", "value": 2 }] },
 	null,
 	null,
 	null,
