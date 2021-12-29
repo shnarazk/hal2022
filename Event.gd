@@ -18,6 +18,7 @@ var events = {
 			"effect": [{ "type": "hour", "value": -50 }, {"type": "contribution_point", "value": 5}],
 			"require": "is_skill_level3",
 		},
+		{ "message": "学会表彰", "effect": [{ "type": "connection_point", "value": 1}]},
 		{ "message": "特許成立", "effect": [{ "type": "hour", "value": -20 }, {"type": "money", "value": 500}],
 			"require": "is_skill_level2"
 		},
@@ -46,6 +47,7 @@ var events = {
 		}
 	],
 	"private": [
+		{ "message": "twitter炎上", "effect": [{ "type": "hour", "value": -20 }] },
 		{ "message": "過労で入院", "effect": [{ "type": "hour", "value": -300 }, { "type": "university_point", "value": -2}] },
 		{ "message": "子供が生まれる", "effect": [{ "type": "hour", "value": -200 }], "require": "is_married" },
 		{ "message": "交通事故で入院", "effect": [{ "type": "hour", "value": -100 },  { "type": "university_point", "value": -2}] }
@@ -65,6 +67,12 @@ var events = {
 		}
 	],
 	"university": [
+		{ "message": "学生との打ち合わせ", "effect": [{ "type": "hour", "value": -10 }],
+			"require": "has_student"
+		},
+		{ "message": "ポスドクとの打ち合わせ", "effect": [{ "type": "hour", "value": -20 }],
+			"require": "has_postdoc"
+		},
 		{ "message": "学務委員選出", "effect": [{ "type": "hour", "value": -100 }, {"type": "university_point", "value": 1}] },
 		{ "message": "学科長選出", "effect": [{ "type": "hour", "value": -100 }, {"type": "university_point", "value": 4}],
 			"require": "is_professor"
@@ -77,7 +85,8 @@ var events = {
 		},
 		{ "message": "学内不祥事対応", "effect": [{ "type": "hour", "value": -50 }, {"type": "university_point", "value": 4}] }
 	],
-	"wild": []
+	"wild": [
+	]
 }
 
 func select():
