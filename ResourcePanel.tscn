@@ -61,34 +61,34 @@ custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "活動時間"
 align = 2
 
-[node name="TitleFixed" type="Label" parent="Panel/Resource/TimeTable/Lables"]
+[node name="UniversityHour" type="Label" parent="Panel/Resource/TimeTable/Lables"]
 margin_top = 70.0
 margin_right = 120.0
 margin_bottom = 101.0
 rect_min_size = Vector2( 100, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "学内（固定）"
+text = "学内"
 align = 2
 
-[node name="TtitleAssoc" type="Label" parent="Panel/Resource/TimeTable/Lables"]
+[node name="SocietyHour" type="Label" parent="Panel/Resource/TimeTable/Lables"]
 margin_top = 105.0
 margin_right = 120.0
 margin_bottom = 136.0
 rect_min_size = Vector2( 100, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "学会（固定）"
+text = "学会"
 align = 2
 
-[node name="TitleOut" type="Label" parent="Panel/Resource/TimeTable/Lables"]
+[node name="PrivateHour" type="Label" parent="Panel/Resource/TimeTable/Lables"]
 margin_top = 140.0
 margin_right = 120.0
 margin_bottom = 171.0
 rect_min_size = Vector2( 100, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "学外（固定）"
+text = "その他"
 align = 2
 
-[node name="TitleStudent" type="Label" parent="Panel/Resource/TimeTable/Lables"]
+[node name="Student" type="Label" parent="Panel/Resource/TimeTable/Lables"]
 margin_top = 175.0
 margin_right = 120.0
 margin_bottom = 206.0
@@ -97,7 +97,7 @@ custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "学生"
 align = 2
 
-[node name="TitlePonhIog" type="Label" parent="Panel/Resource/TimeTable/Lables"]
+[node name="PostDoc" type="Label" parent="Panel/Resource/TimeTable/Lables"]
 margin_top = 210.0
 margin_right = 120.0
 margin_bottom = 241.0
@@ -106,7 +106,7 @@ custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "ポスドク"
 align = 2
 
-[node name="ResearchTimelabel" type="Label" parent="Panel/Resource/TimeTable/Lables"]
+[node name="ResearchHour" type="Label" parent="Panel/Resource/TimeTable/Lables"]
 margin_top = 245.0
 margin_right = 120.0
 margin_bottom = 276.0
@@ -166,21 +166,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Fixed" type="Label" parent="Panel/Resource/TimeTable/Team"]
+[node name="UniversityHour" type="Label" parent="Panel/Resource/TimeTable/Team"]
 margin_top = 70.0
 margin_right = 130.0
 margin_bottom = 101.0
-align = 2
 
-[node name="JobForUniv" type="Label" parent="Panel/Resource/TimeTable/Team"]
+[node name="SocietyHour" type="Label" parent="Panel/Resource/TimeTable/Team"]
 margin_top = 105.0
 margin_right = 130.0
 margin_bottom = 136.0
 
-[node name="JobForSoc" type="Label" parent="Panel/Resource/TimeTable/Team"]
+[node name="PrivateHour" type="Label" parent="Panel/Resource/TimeTable/Team"]
 margin_top = 140.0
 margin_right = 130.0
 margin_bottom = 171.0
+align = 2
 
 [node name="Student" type="Label" parent="Panel/Resource/TimeTable/Team"]
 margin_top = 175.0
@@ -198,7 +198,7 @@ custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "50"
 align = 2
 
-[node name="ResearchTime" type="Label" parent="Panel/Resource/TimeTable/Team"]
+[node name="ResearchHour" type="Label" parent="Panel/Resource/TimeTable/Team"]
 margin_top = 245.0
 margin_right = 130.0
 margin_bottom = 276.0
@@ -248,28 +248,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Fixed" type="Label" parent="Panel/Resource/TimeTable/Personal"]
+[node name="UniversityHour" type="Label" parent="Panel/Resource/TimeTable/Personal"]
 margin_top = 70.0
 margin_right = 130.0
 margin_bottom = 101.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "-100"
+text = "-50"
 align = 2
 
-[node name="JobForUniv" type="Label" parent="Panel/Resource/TimeTable/Personal"]
+[node name="SocietyHour" type="Label" parent="Panel/Resource/TimeTable/Personal"]
 margin_top = 105.0
 margin_right = 130.0
 margin_bottom = 136.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "-50"
+text = "0"
 align = 2
 
-[node name="JobForSoc" type="Label" parent="Panel/Resource/TimeTable/Personal"]
+[node name="PrivateHour" type="Label" parent="Panel/Resource/TimeTable/Personal"]
 margin_top = 140.0
 margin_right = 130.0
 margin_bottom = 171.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "0"
+text = "-100"
 align = 2
 
 [node name="Student" type="Label" parent="Panel/Resource/TimeTable/Personal"]
@@ -288,7 +288,7 @@ custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "0"
 align = 2
 
-[node name="ResearchTime" type="Label" parent="Panel/Resource/TimeTable/Personal"]
+[node name="ResearchHour" type="Label" parent="Panel/Resource/TimeTable/Personal"]
 margin_top = 245.0
 margin_right = 130.0
 margin_bottom = 276.0

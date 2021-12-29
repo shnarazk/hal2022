@@ -9,8 +9,22 @@ var number_of_papers = [0, 1, 0, 0, 0]
 var skill_level = 1
 var hour = 600
 var writing_hour = 0
+var university_hour_default = 50
+var university_hour_year_init = university_hour_default
+var university_hour = university_hour_year_init
+var society_hour_default = 50
+var society_hour_year_init = society_hour_default
+var society_hour = society_hour_year_init
+var private_hour_default = 0
+var private_hour_year_init = private_hour_default
+var private_hour = private_hour_year_init
 var number_of_students = 0
+var student_hour = { "hour": 0, "year": 0, "default": 0 }
 var number_of_postdocs = 0
+var postdoc_hour = { "hour": 0, "year": 0, "default": 0 }
+# var postdoc_hour_default = 0
+# var postdoc_hour_year_init = postdoc_hour_default
+# var postdoc_hour = postdoc_hour_year_init
 var university = "T大"
 var university_rank = 1
 var level_in_university = 1
@@ -18,8 +32,6 @@ var university_point = 10
 var level_in_society = 1
 var connection_point = 10
 var contribution_point = 10
-var step = 0
-var event_hour = 0
 var money = 500
 var kaken = { "year": 0, "money": 1000 }
 var submission = [{ "state": "submit", "wait": 2, "level": 1 } ]
@@ -35,36 +47,74 @@ func turn():
 func accept_proposal(event):
 	for effect in event.get("effect", []):
 		match effect.get("type", ""):
-			"hour": event_hour += effect.get("value", 0)
-			"number_of_student": number_of_students += effect.get("value", 0)
-			"number_of_postdoc": number_of_postdocs += effect.get("value", 0)
-			"money": money += effect.get("value", 0)
-			"connection_point": connection_point += effect.get("value", 0)
-			"university_point": university_point += effect.get("value", 0)
-			"society_point": contribution_point += effect.get("value", 0)
-			_: print(effect)
+			"hour":
+				print("hour : %s" % event)
+			"university_hour_tmp":
+				university_hour += effect.get("value", 0)
+			"university_hour_year":
+				university_hour += effect.get("value", 0)
+				university_hour_year_init += effect.get("value", 0)
+			"society_hour_tmp":
+				society_hour += effect.get("value", 0)
+			"society_hour_year":
+				society_hour += effect.get("value", 0)
+				society_hour_year_init += effect.get("value", 0)
+			"private_hour_tmp":
+				private_hour += effect.get("value", 0)
+			"private_hour_year":
+				private_hour += effect.get("value", 0)
+				private_hour_year_init += effect.get("value", 0)
+			"student_hour_tmp":
+				student_hour["hour"] += effect.get("value", 0)
+			"student_hour_year":
+				student_hour["hour"] += effect.get("value", 0)
+				student_hour["year"] += effect.get("value", 0)
+			"postdoc_hour_tmp":
+				postdoc_hour["hour"] += effect.get("value", 0)
+			"postdoc_hour_year":
+				postdoc_hour["hour"] += effect.get("value", 0)
+				postdoc_hour["year"] += effect.get("value", 0)
+			"number_of_student":
+				number_of_students += effect.get("value", 0)
+			"number_of_postdoc":
+				number_of_postdocs += effect.get("value", 0)
+			"money":
+				money += effect.get("value", 0)
+			"connection_point":
+				connection_point += effect.get("value", 0)
+			"university_point":
+				university_point += effect.get("value", 0)
+			"society_point":
+				contribution_point += effect.get("value", 0)
+			_: print("can't handle %s" % effect)
 	pass
 
-func reject_proposal(event):
+func reject_proposal(_event):
 	pass
 
 func check_event_condition(event) -> bool:
 	match event.get("require", ""):
-		"is_professor": return rank == 1
-		"is_skill_level3": return 3 <= skill_level
-		"is_skill_level2": return 2 <= skill_level
-		"has_postdoc": return 0 < number_of_postdocs
-		"has_student": return 0 < number_of_students
-		"": return true
+		"is_professor":
+			return rank == 1
+		"is_skill_level3":
+			return 3 <= skill_level
+		"is_skill_level2":
+			return 2 <= skill_level
+		"has_postdoc":
+			return 0 < number_of_postdocs
+		"has_student":
+			return 0 < number_of_students
+		"":
+			return true
 		_:
 			print(event)
 			return false
-	return false
 
 func submittable() -> int:
 	if !submission.empty(): return 0
 	for i in [3, 2, 1]:
-		if hour_for_paper[i] <= writing_hour and money_for_paper[i] <= money: return i
+		if hour_for_paper[i] <= writing_hour and money_for_paper[i] <= money:
+			return i
 	return 0
 
 func submit(level):
@@ -110,21 +160,39 @@ func update_submission():
 				if 0.5 < rand_range(0.0, 1.0):
 					return { "id": "論文の内容について1回目の照会です" }
 				else:
-					return { "id": "論文は不受理となりました" }
 					submission.pop_front()
+					return { "id": "論文は不受理となりました" }
 			_: return null
 	return null
 
 func turn_end():
-	writing_hour += hour
-	step = 0
+	var lab_hour = 50 * number_of_students + 100 * number_of_postdocs - student_hour["hour"] - postdoc_hour["hour"]
+	var my_hour = hour - university_hour - society_hour - private_hour
+	writing_hour += my_hour + lab_hour
 	hour = 600
-	event_hour = 0
+	university_hour = university_hour_year_init
+	society_hour = society_hour_year_init
+	private_hour = private_hour_year_init
+	student_hour["hour"] = student_hour["year"]
+	postdoc_hour["hour"] = postdoc_hour["year"]
 
 func year_end():
 	year += 1
 	if 30 < year:
 		return {"kind": 2, "message": "十分な実績を残すことができませんでした" }
+
+	university_hour_year_init = university_hour_default
+	society_hour_year_init = society_hour_default
+	private_hour_year_init = private_hour_default
+	university_hour = university_hour_year_init
+	society_hour = society_hour_year_init
+	private_hour = private_hour_year_init
+
+	student_hour["year"] = student_hour["default"]
+	student_hour["hour"] = student_hour["default"]
+	postdoc_hour["year"] = postdoc_hour["default"]
+	postdoc_hour["hour"] = postdoc_hour["default"]
+
 	if 0 < kaken["year"]:
 		kaken["year"] -= 1
 		money += kaken["money"]
@@ -162,10 +230,11 @@ func year_end():
 		return null
 
 func update_research_hour():
-	hour += number_of_students * 50
-	hour += number_of_postdocs * 50
-	hour -= level_in_university * 40
-	hour -= level_in_society * 40
-	if hour < 0:
-		writing_hour += hour
-		hour = 0
+	var total = hour
+	total += number_of_students * 50
+	total += number_of_postdocs * 50
+	total -= level_in_university * 40
+	total -= level_in_society * 40
+	if total < 0:
+		writing_hour += total
+		total = 0

@@ -16,7 +16,7 @@ var events = {
 		null,
 		{ "id": "TV出演",
 			"optional": true,
-			"effect": [{ "type": "hour", "value": -50 }, {"type": "contribution_point", "value": 5}],
+			"effect": [{ "type": "society_hour_tmp", "value": 50 }, {"type": "contribution_point", "value": 5}],
 			"require": "is_skill_level3",
 		},
 		{ "id": "学会表彰", "effect": [{ "type": "connection_point", "value": 1}]},
@@ -51,43 +51,43 @@ var events = {
 	],
 	"private": [
 		null,
-		{ "id": "twitter炎上", "effect": [{ "type": "hour", "value": -20 }] },
-		{ "id": "過労で入院", "effect": [{ "type": "hour", "value": -300 }, { "type": "university_point", "value": -2}] },
-		{ "id": "子供が生まれる", "effect": [{ "type": "hour", "value": -200 }], "require": "is_married" },
-		{ "id": "交通事故で入院", "effect": [{ "type": "hour", "value": -100 },  { "type": "university_point", "value": -2}] }
+		{ "id": "twitter炎上", "effect": [{ "type": "private_hour_tmp", "value": 20 }] },
+		{ "id": "過労で入院", "effect": [{ "type": "private_hour_year", "value": 300 }, { "type": "university_point", "value": -2}] },
+		{ "id": "子供が生まれる", "effect": [{ "type": "private_hour_year", "value": 100 }], "require": "is_married" },
+		{ "id": "交通事故で入院", "effect": [{ "type": "private_hour_tmp", "value": 300 },  { "type": "university_point", "value": -2}] }
 	],
 	"society": [
 		{ "id": "論文査読",
 			"optional": true,
-			"effect": [{ "type": "hour", "value": -50 }, {"type": "society_point", "value": 5}],
+			"effect": [{ "type": "society_hour_tmp", "value": 50 }, {"type": "society_point", "value": 5}],
 			"decline": [{"type": "society_point", "value": -3}]
 		},
-		{ "id": "研究会開催", "effect": [{ "type": "hour", "value": -50 }, {"type": "society_point", "value": 5}]},
+		{ "id": "研究会開催", "effect": [{ "type": "society_hour_tmp", "value": 50 }, {"type": "society_point", "value": 5}]},
 		{ "id": "国際大会開催",
 			"optional": true,
-			"effect": [{ "type": "hour", "value": -200 }, {"type": "society_point", "value": 20}],
+			"effect": [{ "type": "society_hour_tmp", "value": 200 }, {"type": "society_point", "value": 20}],
 			"decline": [{"type": "society_point", "value": -3}],
 			"require": "is_professor"
 		}
 	],
 	"university": [
-		{ "id": "学生との打ち合わせ", "effect": [{ "type": "hour", "value": -10 }],
+		{ "id": "学生との打ち合わせ", "effect": [{ "type": "student_hour_tmp", "value": 10 }],
 			"require": "has_student"
 		},
-		{ "id": "ポスドクとの打ち合わせ", "effect": [{ "type": "hour", "value": -20 }],
+		{ "id": "ポスドクとの打ち合わせ", "effect": [{ "type": "postdoc_hour_tmp", "value": 20 }],
 			"require": "has_postdoc"
 		},
-		{ "id": "学務委員選出", "effect": [{ "type": "hour", "value": -100 }, {"type": "university_point", "value": 1}] },
-		{ "id": "学科長選出", "effect": [{ "type": "hour", "value": -100 }, {"type": "university_point", "value": 4}],
+		{ "id": "学務委員選出", "effect": [{ "type": "university_hour_year", "value": 100 }, {"type": "university_point", "value": 1}] },
+		{ "id": "学科長選出", "effect": [{ "type": "university_hour_year", "value": 100 }, {"type": "university_point", "value": 4}],
 			"require": "is_professor"
 		},
-		{ "id": "学部長選出", "effect": [{ "type": "hour", "value": -200 }, {"type": "university_point", "value": 20}],
+		{ "id": "学部長選出", "effect": [{ "type": "university_hour_year", "value": 200 }, {"type": "university_point", "value": 20}],
 			"require": "is_professor"
 		},
-		{ "id": "国際提携校締結", "effect": [{ "type": "hour", "value": -100 }, {"type": "university_point", "value": 10}],
+		{ "id": "国際提携校締結", "effect": [{ "type": "university_hour_tmp", "value": 100 }, {"type": "university_point", "value": 10}],
 			"require": "is_professor"
 		},
-		{ "id": "学内不祥事対応", "effect": [{ "type": "hour", "value": -50 }, {"type": "university_point", "value": 4}] }
+		{ "id": "学内不祥事対応", "effect": [{ "type": "university_hour_tmp", "value": 50 }, {"type": "university_point", "value": 4}] }
 	],
 	"wild": [
 	]
