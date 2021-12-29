@@ -26,7 +26,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if active:
-		$Cell.rotate_z(0.01)
+		$Cell.rotate_z(0.5 * delta)
 
 func upgrade():
 	$Cell/MeshInstance.set_surface_material(0, advanced_material)

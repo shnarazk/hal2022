@@ -43,7 +43,7 @@ func _on_Button_pressed():
 	if new_year:
 		year_end()
 
-func _on_event_happened(priority, message):
+func _on_event_happened(_priority, message):
 	# print(message)
 	# return
 	$EventHappened.display(message["id"])
@@ -77,7 +77,6 @@ func update_research_hour():
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/JobForSoc.text = "%s" % (player.level_in_society * -40)
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % (player.hour - player.event_hour)
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/WritingTime.text = "%s" % player.writing_hour
-	$RsearchPanel/Panel/Resource/Resource
 
 func update_state_panel():
 	$StatusPanel/Panel/Status/Personal/ResearchLevel.text = '%dx%d' % [player.skill_level, 0]
