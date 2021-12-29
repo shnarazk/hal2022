@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://font/NotoSansCJKjp-DemiLight.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -22,11 +22,6 @@ material = SubResource( 14 )
 size = Vector3( 10, 0.1, 10 )
 
 [sub_resource type="BoxShape" id=16]
-
-[sub_resource type="DynamicFont" id=13]
-size = 82
-extra_spacing_char = 2
-font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxTexture" id=19]
 texture = ExtResource( 3 )
@@ -121,22 +116,6 @@ material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="GameSpace/Ground"]
 shape = SubResource( 16 )
-
-[node name="Spatial" type="Spatial" parent="GameSpace"]
-
-[node name="Logo" type="Label" parent="GameSpace/Spatial"]
-visible = false
-margin_left = 571.0
-margin_top = 700.0
-margin_right = 1604.0
-margin_bottom = 823.0
-rect_rotation = -33.0
-custom_colors/font_color = Color( 1, 1, 1, 0.156863 )
-custom_fonts/font = SubResource( 13 )
-text = "Happy Academic Life 2022"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="AssistantStage" parent="GameSpace" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.3, 0.5 )
