@@ -32,6 +32,25 @@ func _init():
 func turn():
 	pass
 
+func accept_proposal(event):
+	pass
+
+func reject_proposal(event):
+	pass
+
+func check_event_condition(event) -> bool:
+	match event.get("require", ""):
+		"is_professor": return rank == 1
+		"is_skill_level3": return 3 <= skill_level
+		"is_skill_level2": return 2 <= skill_level
+		"has_postdoc": return 0 < number_of_postdocs
+		"has_student": return 0 < number_of_students
+		"": return true
+		_:
+			print(event)
+			return false
+	return false
+
 func submittable() -> int:
 	if !submission.empty(): return 0
 	for i in [3, 2, 1]:

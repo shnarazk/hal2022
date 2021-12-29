@@ -39,9 +39,9 @@ func _on_Button_pressed():
 	var new_year = false
 	var paper_work = player.update_submission()
 	if player.rank == 0:
-		new_year = $GameSpace/AssistantStage.go_forward(s, paper_work)
+		new_year = $GameSpace/AssistantStage.go_forward(s, player, paper_work)
 	else:
-		new_year = $GameSpace/ProfessorStage.go_forward(s, paper_work)
+		new_year = $GameSpace/ProfessorStage.go_forward(s, player, paper_work)
 	if new_year:
 		year_end()
 
