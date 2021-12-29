@@ -11,6 +11,23 @@
 [ext_resource path="res://art/annie-spratt-5cFwQ-WMcJU-unsplash Large.jpeg" type="Texture" id=9]
 [ext_resource path="res://ResourcePanel.tscn" type="PackedScene" id=10]
 
+[sub_resource type="SpatialMaterial" id=14]
+albedo_color = Color( 0.454902, 0.592157, 0.52549, 1 )
+roughness_texture = ExtResource( 9 )
+roughness_texture_channel = 4
+uv1_scale = Vector3( -3, -3, 1 )
+
+[sub_resource type="CubeMesh" id=15]
+material = SubResource( 14 )
+size = Vector3( 10, 0.1, 10 )
+
+[sub_resource type="BoxShape" id=16]
+
+[sub_resource type="DynamicFont" id=13]
+size = 82
+extra_spacing_char = 2
+font_data = ExtResource( 1 )
+
 [sub_resource type="StyleBoxTexture" id=19]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 356, 92 )
@@ -90,64 +107,8 @@ font_data = ExtResource( 1 )
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
 
-[sub_resource type="SpatialMaterial" id=14]
-albedo_color = Color( 0.454902, 0.592157, 0.52549, 1 )
-roughness_texture = ExtResource( 9 )
-roughness_texture_channel = 4
-uv1_scale = Vector3( -3, -3, 1 )
-
-[sub_resource type="CubeMesh" id=15]
-material = SubResource( 14 )
-size = Vector3( 10, 0.1, 10 )
-
-[sub_resource type="BoxShape" id=16]
-
-[sub_resource type="DynamicFont" id=13]
-size = 82
-extra_spacing_char = 2
-font_data = ExtResource( 1 )
-
 [node name="Main" type="Spatial"]
 script = ExtResource( 2 )
-
-[node name="OpeningPanel" type="Panel" parent="."]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme = SubResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StartButton" type="Button" parent="OpeningPanel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -66.5
-margin_top = -33.0
-margin_right = 66.5
-margin_bottom = 33.0
-theme = SubResource( 2 )
-text = "START"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="StartButton2" type="Button" parent="OpeningPanel"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 110.0
-margin_top = -33.0
-margin_right = 243.0
-margin_bottom = 33.0
-theme = SubResource( 2 )
-text = "PAUSE"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="GameSpace" type="Spatial" parent="."]
 
@@ -347,8 +308,29 @@ __meta__ = {
 wait_time = 2.0
 one_shot = true
 
-[connection signal="pressed" from="OpeningPanel/StartButton" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="OpeningPanel/StartButton2" to="." method="_on_Button_pressed"]
+[node name="OpeningPanel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="OpeningPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -66.5
+margin_top = -33.0
+margin_right = 66.5
+margin_bottom = 33.0
+theme = SubResource( 2 )
+text = "START"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="event_happened" from="GameSpace/AssistantLife" to="." method="_on_event_happened"]
 [connection signal="event_happened" from="GameSpace/ProfessorLife" to="." method="_on_event_happened"]
 [connection signal="pressed" from="Console/StartButton" to="." method="_on_Button_pressed"]
@@ -359,3 +341,4 @@ one_shot = true
 [connection signal="pressed" from="Console/Level5Button" to="." method="_on_Button_pressed"]
 [connection signal="timeout" from="Console/EventHappened/EventDisplayTimer" to="Console/EventHappened" method="_on_EventDisplayTimer_timeout"]
 [connection signal="timeout" from="Console/StatusReport/EventDisplayTimer" to="Console/StatusReport" method="_on_EventDisplayTimer_timeout"]
+[connection signal="pressed" from="OpeningPanel/StartButton" to="." method="_on_StartButton_pressed"]

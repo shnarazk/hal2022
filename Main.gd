@@ -98,6 +98,7 @@ func _on_Level1Button_pressed():
 	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(1)
 	update_research_hour()
+	update_state_panel()
 
 func _on_Level2Button_pressed():
 	$Console/Level1Button.disabled = true
@@ -106,6 +107,7 @@ func _on_Level2Button_pressed():
 	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(2)
 	update_research_hour()
+	update_state_panel()
 
 func _on_Level3Button_pressed():
 	$Console/Level1Button.disabled = true
@@ -114,3 +116,7 @@ func _on_Level3Button_pressed():
 	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(3)
 	update_research_hour()
+	update_state_panel()
+
+func _on_StartButton_pressed():
+	$OpeningPanel.hide()
