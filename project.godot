@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Job",
 "class": "Assistant",
 "language": "GDScript",
-"path": "res://AssistantJob.gd"
+"path": "res://AssistantStage.gd"
 }, {
 "base": "Node",
 "class": "Job",
@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Job",
 "class": "Professor",
 "language": "GDScript",
-"path": "res://ProfessorJob.gd"
+"path": "res://ProfessorStage.gd"
 }, {
 "base": "Node",
 "class": "Skill",

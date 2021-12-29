@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://AssistantJob.gd" type="Script" id=1]
+[ext_resource path="res://AssistantStage.gd" type="Script" id=1]
 [ext_resource path="res://art/logo.glb" type="PackedScene" id=2]
 [ext_resource path="res://art/shazai.glb" type="PackedScene" id=3]
 
@@ -14,7 +14,7 @@ albedo_color = Color( 0.498039, 0.588235, 0.478431, 1 )
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
 
-[node name="JobMap" type="Spatial"]
+[node name="Stage" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="Ground" type="Spatial" parent="."]

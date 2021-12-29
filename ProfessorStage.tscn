@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://ProfessorJob.gd" type="Script" id=1]
+[ext_resource path="res://ProfessorStage.gd" type="Script" id=1]
 [ext_resource path="res://art/logo.glb" type="PackedScene" id=2]
 
 [sub_resource type="BoxShape" id=1]
@@ -13,7 +13,7 @@ albedo_color = Color( 0.552941, 0.478431, 0.588235, 1 )
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
 
-[node name="JobMap" type="Spatial"]
+[node name="Stage" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="Ground" type="Spatial" parent="."]

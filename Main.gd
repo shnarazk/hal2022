@@ -8,7 +8,7 @@ func _ready():
 	randomize()
 	$Console/EventHappened.hide()
 	$Console/StatusReport.hide()
-	$GameSpace/ProfessorLife.hide()
+	$GameSpace/ProfessorStage.hide()
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
@@ -39,9 +39,9 @@ func _on_Button_pressed():
 	var new_year = false
 	var paper_work = player.update_submission()
 	if player.rank == 0:
-		new_year = $GameSpace/AssistantLife.go_forward(s, paper_work)
+		new_year = $GameSpace/AssistantStage.go_forward(s, paper_work)
 	else:
-		new_year = $GameSpace/ProfessorLife.go_forward(s, paper_work)
+		new_year = $GameSpace/ProfessorStage.go_forward(s, paper_work)
 	if new_year:
 		year_end()
 
@@ -68,8 +68,8 @@ func year_end():
 			$StatuReport.display(ret["message"])
 		1:
 			$Console/StatusReport.display(ret["message"])
-			$GameSpace/AssistantLife.hide()
-			$GameSpace/ProfessorLife.show()
+			$GameSpace/AssistantStage.hide()
+			$GameSpace/ProfessorStage.show()
 		2:
 			$Console/StatusReport.display(ret["message"])
 			# FIXME 強制終了の処理

@@ -3,8 +3,8 @@
 [ext_resource path="res://font/NotoSansCJKjp-DemiLight.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://art/button-bg.svg" type="Texture" id=3]
-[ext_resource path="res://ProfessorJob.tscn" type="PackedScene" id=4]
-[ext_resource path="res://AssistantJob.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ProfessorStage.tscn" type="PackedScene" id=4]
+[ext_resource path="res://AssistantStage.tscn" type="PackedScene" id=5]
 [ext_resource path="res://StatusPanel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://EventHappened.gd" type="Script" id=7]
 [ext_resource path="res://StatusReport.gd" type="Script" id=8]
@@ -138,10 +138,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AssistantLife" parent="GameSpace" instance=ExtResource( 5 )]
+[node name="AssistantStage" parent="GameSpace" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.3, 0.5 )
 
-[node name="ProfessorLife" parent="GameSpace" instance=ExtResource( 4 )]
+[node name="ProfessorStage" parent="GameSpace" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.4, 0.5 )
 
 [node name="StatusPanel" parent="." instance=ExtResource( 6 )]
@@ -331,8 +331,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="event_happened" from="GameSpace/AssistantLife" to="." method="_on_event_happened"]
-[connection signal="event_happened" from="GameSpace/ProfessorLife" to="." method="_on_event_happened"]
+[connection signal="event_happened" from="GameSpace/AssistantStage" to="." method="_on_event_happened"]
+[connection signal="event_happened" from="GameSpace/ProfessorStage" to="." method="_on_event_happened"]
 [connection signal="pressed" from="Console/StartButton" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Console/Level1Button" to="." method="_on_Level1Button_pressed"]
 [connection signal="pressed" from="Console/Level2Button" to="." method="_on_Level2Button_pressed"]
