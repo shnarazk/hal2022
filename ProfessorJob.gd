@@ -34,7 +34,7 @@ var my_event = [
 	{ "id": "国際会議実行委員", "type": "univ", "hour": 20 },
 	{ "id": "体調不良", "type": "univ", "hour": 200 },
 	{ "id": "アカハラ", "type": "univ", "hour": 400 },
-	{ "id": "不正行為発覚", "type": "univ", "hour": 500 },
+	{ "id": "論文不正発覚", "type": "special", "image": null }
 ]
 
 func _init():

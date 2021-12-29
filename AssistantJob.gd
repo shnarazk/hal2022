@@ -28,12 +28,12 @@ var my_scheduled_event = [
 
 var my_event = [
 	null,
-	{"id": "出張", "type": "", "hour": 20},
-	{"id": "論文査読委員", "type":"social", "hour": 50},
-	{"id": "海外出張", "type": "special"},
-	{"id": "共同研究", "type": "special"},
-	{"id": "アカハラ", "type": "special"},
-	{"id": "不正行為発覚", "type": "special"}
+	{ "id": "出張", "type": "", "hour": 20},
+	{ "id": "論文査読委員", "type":"social", "hour": 50},
+	{ "id": "海外出張", "type": "special"},
+	{ "id": "共同研究", "type": "special"},
+	{ "id": "アカハラ", "type": "special"},
+	{ "id": "論文不正発覚", "type": "special", "image": null }
 ]
 
 func _init():
