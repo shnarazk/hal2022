@@ -3,8 +3,8 @@ class_name Professor
 
 var my_scheduled_event = [
 	# 1月
-	{ "id": "大学入試監督", "type": "univ", "hour": 10 },
-	{ "id": "学位諮問会", "type": "univ", "hour": 10 },
+	{ "id": "1月大学入試監督", "type": "univ", "hour": 10 },
+	{ "id": "2月学位諮問会", "type": "univ", "hour": 10 },
 	null,
 	null,
 	# 4月
@@ -15,11 +15,11 @@ var my_scheduled_event = [
 	null,
 	# 7月
 	null,
-	{ "id": "大学院入試問題作成委員", "type": "univ", "hour": 30 },
+	{ "id": "7月大学院入試問題作成委員", "type": "univ", "hour": 30 },
 	null,
-	{ "id": "科研費申請", "type": "univ", "hour": 100 },
+	{ "id": "10月科研費申請", "type": "univ", "hour": 100 },
 	null,
-	{ "id": "大学入試問題作成委員", "type": "univ", "hour": 200 },
+	{ "id": "10月大学入試問題作成委員", "type": "univ", "hour": 200 },
 	null,
 	null,
 	null,

@@ -18,7 +18,7 @@ var connection_point = 10
 var contribution_point = 10
 var step = 0
 var event_hour = 0
-var money = 0
+var money = 500
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -60,22 +60,29 @@ func _on_Button_pressed():
 			$Console/Level2Button.disabled = false
 		if 2200 < writing_hour:
 			$Console/Level3Button.disabled = false
+	var new_year = false
 	if rank == 0:
-		var new_year = $GameSpace/AssistantLife.go_forward(s)
-		if new_year:
-			year_end()
+		new_year = $GameSpace/AssistantLife.go_forward(s)
 	else:
-		$GameSpace/ProfessorLife.go_forward(s)
+		new_year = $GameSpace/ProfessorLife.go_forward(s)
+	if new_year:
+		year_end()
 
 func _on_event_happened(priority, message):
 	# print(message)
 	# return
 	$EventHappened.display(message["id"])
-	# print("event handler: %s" % message)
 	if message["type"] == "univ":
 		event_hour += message["hour"]
 		update_research_hour()
 	point += priority
+
+func year_end():
+	year += 1
+	if 30 < year:
+		$StatuReport.display("十分な実績を残すことができませんでした")
+		# FIXME 強制終了の処理
+		return
 	if 10 < point and rank == 0:
 		rank = 1
 		point = 0
@@ -84,12 +91,11 @@ func _on_event_happened(priority, message):
 			e.upgrade()
 		$GameSpace/ProfessorLife.show()
 		$StatusReport.display("教授になりました")
-
-func year_end():
-	year += 1
-	$StatusReport.display("研究者になって%s年が経ちました" %  year)
+	else:
+		$StatusReport.display("研究者になって%s年が経ちました" %  year)
 	number_of_postdocs = 0
 	number_of_students = 0
+	money = 500
 
 func update_research_hour():
 	hour += number_of_students * 50
@@ -109,7 +115,7 @@ func update_research_hour():
 	$RsearchPanel/Panel/Resource/Resource
 
 func update_state_panel():
-	$StatusPanel/Panel/Status/Personal/ResearchLevel.text = '%d' % researcher_level
+	$StatusPanel/Panel/Status/Personal/ResearchLevel.text = '%dx%d' % [researcher_level, 0]
 	$StatusPanel/Panel/Status/Personal/UniversityPoint.text = '%d' % university_point
 	$StatusPanel/Panel/Status/Personal/ConnectionPoint.text = '%d' % connection_point
 	$StatusPanel/Panel/Status/Personal/ContributionPoint.text = '%d' % contribution_point

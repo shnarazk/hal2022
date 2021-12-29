@@ -4,25 +4,25 @@ class_name Assistant
 # Declare member variables here. Examples:
 var my_scheduled_event = [
 	# 1月
-	{ "id": "卒業研究指導", "type": "univ", "hour": 100 },
+	{ "id": "1月卒業研究指導", "type": "univ", "hour": 100 },
 	null,
 	null,
 	null,
 	# 4月
-	{ "id": "新入生対応", "type": "univ", "hour": 100 },
-	{ "id": "新入生対応", "type": "univ", "hour": 100 },
-	{ "id": "修士論文指導", "type": "univ", "hour": 100 },
+	{ "id": "4月新入生対応", "type": "univ", "hour": 100 },
+	{ "id": "5月新入生対応", "type": "univ", "hour": 100 },
+	{ "id": "6月修士論文指導", "type": "univ", "hour": 100 },
 	null,
 	null,
 	# 7月
 	null,
 	null,
 	null,
-	{ "id": "科研費申請", "type": "univ", "hour": 100},
+	{ "id": "10月科研費申請", "type": "univ", "hour": 100},
 	null,
-	{ "id":"修士論文指導", "type": "univ", "hour": 100},
-	{ "id":"卒業研究指導", "type": "univ", "hour": 100},
-	{ "id":"卒業研究指導", "type": "univ", "hour": 100},
+	{ "id":"11月修士論文指導", "type": "univ", "hour": 100},
+	{ "id":"12月卒業研究指導", "type": "univ", "hour": 100},
+	{ "id":"12月卒業研究指導", "type": "univ", "hour": 100},
 	null,
 ]
 

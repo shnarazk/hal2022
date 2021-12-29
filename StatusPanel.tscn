@@ -113,7 +113,7 @@ margin_right = 130.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 130, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "5"
+text = "5x5"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -170,7 +170,7 @@ margin_right = 130.0
 margin_bottom = 66.0
 rect_min_size = Vector2( 130, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "3"
+text = "3x2"
 align = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -205,5 +205,5 @@ margin_top = 175.0
 margin_right = 130.0
 margin_bottom = 206.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "50000000"
+text = "5000K"
 align = 2
