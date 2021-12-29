@@ -23,6 +23,8 @@ var event_hour = 0
 var money = 500
 var kaken = { "year": 0, "money": 1000 }
 var submission = [{ "state": "submit", "wait": 2, "level": 1 } ]
+var hour_for_paper =  [400, 900, 2000, 3400, 2800, 3200]
+var money_for_paper = [200, 500, 2000, 6000, 8000, 12000]
 
 func _init():
 	pass
@@ -30,9 +32,17 @@ func _init():
 func turn():
 	pass
 
+func submittable() -> int:
+	if !submission.empty(): return 0
+	for i in [3, 2, 1]:
+		if hour_for_paper[i] <= writing_hour and money_for_paper[i] <= money: return i
+	return 0
+
 func submit(level):
-	submission.push_back({ "state": "submit", "wait": int(rand_range(1, 2)), "level": level })
-	writing_hour = 0
+	if submission.empty() and hour_for_paper[level] <= writing_hour:
+		submission.push_back({ "state": "submit", "wait": int(rand_range(1, 2)), "level": level })
+		writing_hour -= hour_for_paper[level]
+		money -= money_for_paper[level]
 	print(submission)
 
 class SubmissionSorter:
@@ -106,9 +116,13 @@ func year_end():
 		level_in_society += 1
 		promoted = true
 	if rank == 0:
-		money = 100 + university_rank * 50
+		money += 100 + pow(university_rank, 2) * 50
 	else:
-		money = 200 + university_rank * 200
+		money += 200 + pow(university_rank + skill_level, 1.8) * 200
+	if 0 < kaken["year"]:
+		kaken["year"] -= 1
+		money += kaken["money"]
+	money += 1000 * skill_level
 	if level_up and promoted:
 		return { "kind": 1, "message": "教授に昇進し、研究レベルが上がりました" }
 	elif level_up:

@@ -29,11 +29,12 @@ func _on_Button_pressed():
 	$Console/Level3Button.disabled = true
 	if 2 <= step:
 		player.turn_end()
-		if 950 < player.writing_hour:
+		var sl = player.submittable()
+		if 0 < sl:
 			$Console/Level1Button.disabled = false
-		if 1500 < player.writing_hour:
+		if 1 < sl:
 			$Console/Level2Button.disabled = false
-		if 2200 < player.writing_hour:
+		if 2 < sl:
 			$Console/Level3Button.disabled = false
 	var new_year = false
 	var paper_work = player.update_submission()
@@ -94,25 +95,22 @@ func _on_Level1Button_pressed():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
-	player.writing_hour = 0
-	update_research_hour()
 	$StatusReport.display("論文を投稿しました")
 	player.submit(1)
+	update_research_hour()
 
 func _on_Level2Button_pressed():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
-	player.writing_hour = 0
-	update_research_hour()
 	$StatusReport.display("論文を投稿しました")
 	player.submit(2)
+	update_research_hour()
 
 func _on_Level3Button_pressed():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
-	player.writing_hour = 0
-	update_research_hour()
 	$StatusReport.display("論文を投稿しました")
 	player.submit(3)
+	update_research_hour()

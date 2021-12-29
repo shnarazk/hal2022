@@ -42,9 +42,10 @@ var events = {
 	],
 	"money": [
 		null,
-		{ "id": "企業との共同研究", "effect": [{ "type": "hour", "value": -40 }, { "type": "money", "value": 2500 }] },
-		{ "id": "科研費共同研究採択", "effect": [{ "type": "hour", "value": -100 }, { "type": "money", "value": 3000 }] },
-		{ "id": "通産省助成金獲得", "effect": [{ "type": "hour", "value": -50 }, { "type": "money", "value": 1000 }],
+		{ "id": "企業との共同研究", "effect": [{ "type": "hour", "value": -40 }, { "type": "money", "value": 2_500 }] },
+		{ "id": "科研費共同研究採択", "effect": [{ "type": "hour", "value": -100 }, { "type": "money", "value": 5_000 }] },
+		{ "id": "科研費大型プロジェクト採択", "effect": [{ "type": "hour", "value": -100 }, { "type": "money", "value": 15_000 }] },
+		{ "id": "経済産業省助成金獲得", "effect": [{ "type": "hour", "value": -50 }, { "type": "money", "value": 40_000 }],
 			"require": "is_skill_level3"
 		}
 	],
