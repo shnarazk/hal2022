@@ -2,7 +2,7 @@ extends Job
 class_name Professor
 
 var my_event_type = [
-	"university",
+	"society",
 	"wild",
 	"private",
 	"university",
@@ -19,7 +19,7 @@ var my_event_type = [
 	"university",
 	"wild",
 	"private",
-	"university"
+	"money"
 ]
 
 var my_scheduled_event = [

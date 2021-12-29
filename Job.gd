@@ -22,7 +22,7 @@ func _ready():
 		period.push_back(e)
 	period[current].active = true
 
-func go_forward(step: int):
+func go_forward(step: int, picked_event):
 	var new_year = false
 	period[current].deselect()
 	current += step
@@ -30,8 +30,9 @@ func go_forward(step: int):
 		current = 0
 		new_year = true
 	var e = period[current].select()
-	if e != null:
-		# print(e)
+	if picked_event != null:
+		emit_signal("event_happened", picked_event)
+	elif e != null:
 		emit_signal("event_happened", e)
 	elif scheduled_event[current] != null:
 		emit_signal("event_happened", scheduled_event[current])
@@ -40,7 +41,6 @@ func go_forward(step: int):
 		var chance = int((rand_range(0, nev + 0.1) * rand_range(0, nev + 0.1)) / nev)
 		if nev <= chance:
 			chance = nev - 1
-		# print(chance)
 		if event[chance] != null:
 			emit_signal("event_happened", event[chance])
 	return new_year

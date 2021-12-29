@@ -151,7 +151,7 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.3, 0.5 )
 
 [node name="ProfessorLife" parent="GameSpace" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.4, 0.6 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, 0.4, 0.5 )
 
 [node name="StatusPanel" parent="." instance=ExtResource( 6 )]
 margin_left = 82.0

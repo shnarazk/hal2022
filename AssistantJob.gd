@@ -2,14 +2,14 @@ extends Job
 class_name Assistant
 
 var my_event_type = [
-	"wild",
+	"chance",
 	"university",
 	"money",
 	"wild",
 	"society",
 	"chance",
 	"private",
-	"wild",
+	"university",
 	"society",
 	"university",
 	"wild",
@@ -18,8 +18,8 @@ var my_event_type = [
 	"wild",
 	"society",
 	"private",
-	"wild",
-	"university"
+	"money",
+	"private"
 ]
 
 var my_scheduled_event = [

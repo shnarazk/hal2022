@@ -36,10 +36,11 @@ func _on_Button_pressed():
 		if 2200 < player.writing_hour:
 			$Console/Level3Button.disabled = false
 	var new_year = false
+	var paper_work = player.update_submission()
 	if player.rank == 0:
-		new_year = $GameSpace/AssistantLife.go_forward(s)
+		new_year = $GameSpace/AssistantLife.go_forward(s, paper_work)
 	else:
-		new_year = $GameSpace/ProfessorLife.go_forward(s)
+		new_year = $GameSpace/ProfessorLife.go_forward(s, paper_work)
 	if new_year:
 		year_end()
 
@@ -53,21 +54,24 @@ func _on_event_happened(event):
 	if event.has("type") and event["type"] == "univ":
 		player.event_hour += event["hour"]
 		player.event_hour += event["hour"]
-		update_research_hour()
+	update_research_hour()
+	update_state_panel()
 
 func year_end():
 	var ret = player.year_end()
+	if ret == null:
+		$StatusReport.display("研究者になって%s年が経ちました" %  player.year)
+		return
 	match ret["kind"]:
 		0:
-			$StatusReport.display("研究者になって%s年が経ちました" %  player.year)
-		1:
 			$StatuReport.display(ret["message"])
-			# FIXME 強制終了の処理
-			return
-		2:
+		1:
 			$StatusReport.display(ret["message"])
 			$GameSpace/AssistantLife.hide()
 			$GameSpace/ProfessorLife.show()
+		2:
+			$StatusReport.display(ret["message"])
+			# FIXME 強制終了の処理
 
 func update_research_hour():
 	player.update_research_hour()
@@ -80,7 +84,7 @@ func update_research_hour():
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/WritingTime.text = "%s" % player.writing_hour
 
 func update_state_panel():
-	$StatusPanel/Panel/Status/Personal/ResearchLevel.text = '%dx%d' % [player.skill_level, 0]
+	$StatusPanel/Panel/Status/Personal/ResearchLevel.text = '%dx%d' % [player.skill_level, player.number_of_papers[1]]
 	$StatusPanel/Panel/Status/Personal/UniversityPoint.text = '%d' % player.university_point
 	$StatusPanel/Panel/Status/Personal/ConnectionPoint.text = '%d' % player.connection_point
 	$StatusPanel/Panel/Status/Personal/ContributionPoint.text = '%d' % player.contribution_point
@@ -93,6 +97,7 @@ func _on_Level1Button_pressed():
 	player.writing_hour = 0
 	update_research_hour()
 	$StatusReport.display("論文を投稿しました")
+	player.submit(1)
 
 func _on_Level2Button_pressed():
 	$Console/Level1Button.disabled = true
@@ -101,6 +106,7 @@ func _on_Level2Button_pressed():
 	player.writing_hour = 0
 	update_research_hour()
 	$StatusReport.display("論文を投稿しました")
+	player.submit(2)
 
 func _on_Level3Button_pressed():
 	$Console/Level1Button.disabled = true
@@ -109,3 +115,4 @@ func _on_Level3Button_pressed():
 	player.writing_hour = 0
 	update_research_hour()
 	$StatusReport.display("論文を投稿しました")
+	player.submit(3)
