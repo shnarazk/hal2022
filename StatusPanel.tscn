@@ -13,7 +13,7 @@ default_font = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -1160.0
-margin_bottom = -674.0
+margin_bottom = -760.0
 theme = SubResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -27,27 +27,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel"]
+[node name="Status" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 420.0
-margin_bottom = 321.0
+margin_right = -10.0
+margin_bottom = -10.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Lables" type="VBoxContainer" parent="Panel/HBoxContainer2"]
+[node name="Lables" type="VBoxContainer" parent="Panel/Status"]
 margin_right = 130.0
-margin_bottom = 346.0
-rect_min_size = Vector2( 130, 0 )
+margin_bottom = 220.0
+rect_min_size = Vector2( 130, 180 )
 
-[node name="Label" type="Label" parent="Panel/HBoxContainer2/Lables"]
+[node name="Label" type="Label" parent="Panel/Status/Lables"]
 margin_right = 130.0
 margin_bottom = 31.0
 rect_min_size = Vector2( 120, 0 )
 text = "目標"
 
-[node name="Time" type="Label" parent="Panel/HBoxContainer2/Lables"]
+[node name="ResearchLevel" type="Label" parent="Panel/Status/Lables"]
 margin_top = 35.0
 margin_right = 130.0
 margin_bottom = 66.0
@@ -55,58 +57,34 @@ rect_min_size = Vector2( 120, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "研究レベル"
 
-[node name="TitleFixed" type="Label" parent="Panel/HBoxContainer2/Lables"]
+[node name="UniversityPoint" type="Label" parent="Panel/Status/Lables"]
 margin_top = 70.0
 margin_right = 130.0
 margin_bottom = 101.0
 rect_min_size = Vector2( 100, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "論文ポイント"
+text = "学内ポイント"
 
-[node name="TtitleAssoc" type="Label" parent="Panel/HBoxContainer2/Lables"]
+[node name="ConnectionPoint" type="Label" parent="Panel/Status/Lables"]
 margin_top = 105.0
 margin_right = 130.0
 margin_bottom = 136.0
 rect_min_size = Vector2( 100, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "学内ポイント"
+text = "人脈ポイント"
 
-[node name="TitleConnection" type="Label" parent="Panel/HBoxContainer2/Lables"]
+[node name="ContributionPoint" type="Label" parent="Panel/Status/Lables"]
 margin_top = 140.0
 margin_right = 130.0
 margin_bottom = 171.0
 rect_min_size = Vector2( 100, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "人脈ポイント"
+text = "社会貢献度"
 
-[node name="TitleOut" type="Label" parent="Panel/HBoxContainer2/Lables"]
+[node name="Money" type="Label" parent="Panel/Status/Lables"]
 margin_top = 175.0
 margin_right = 130.0
 margin_bottom = 206.0
-rect_min_size = Vector2( 100, 0 )
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "社会貢献度"
-
-[node name="TitleStudent" type="Label" parent="Panel/HBoxContainer2/Lables"]
-margin_top = 210.0
-margin_right = 130.0
-margin_bottom = 241.0
-rect_min_size = Vector2( 100, 0 )
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "研究レベル"
-
-[node name="TitlePonhIog" type="Label" parent="Panel/HBoxContainer2/Lables"]
-margin_top = 245.0
-margin_right = 130.0
-margin_bottom = 276.0
-rect_min_size = Vector2( 100, 0 )
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "受賞歴"
-
-[node name="TitleMoney" type="Label" parent="Panel/HBoxContainer2/Lables"]
-margin_top = 280.0
-margin_right = 130.0
-margin_bottom = 311.0
 rect_min_size = Vector2( 100, 0 )
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "資金力"
@@ -114,24 +92,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TotalTime" type="Label" parent="Panel/HBoxContainer2/Lables"]
-margin_top = 315.0
-margin_right = 130.0
-margin_bottom = 346.0
-rect_min_size = Vector2( 100, 0 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PersonalStatus" type="VBoxContainer" parent="Panel/HBoxContainer2"]
+[node name="Requires" type="VBoxContainer" parent="Panel/Status"]
 margin_left = 134.0
 margin_right = 264.0
-margin_bottom = 346.0
-rect_min_size = Vector2( 130, 0 )
+margin_bottom = 220.0
+rect_min_size = Vector2( 130, 180 )
 
-[node name="Title" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
+[node name="Title" type="Label" parent="Panel/Status/Requires"]
 margin_right = 130.0
 margin_bottom = 31.0
 text = "卓越研究者"
@@ -140,7 +107,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Time" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
+[node name="ResearchLevel" type="Label" parent="Panel/Status/Requires"]
 margin_top = 35.0
 margin_right = 130.0
 margin_bottom = 66.0
@@ -152,66 +119,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Fixed" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
+[node name="UniversitiyPoint" type="Label" parent="Panel/Status/Requires"]
 margin_top = 70.0
 margin_right = 130.0
 margin_bottom = 101.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "1200"
 align = 2
 
-[node name="JobForUniv" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
+[node name="ConnectionPoint" type="Label" parent="Panel/Status/Requires"]
 margin_top = 105.0
 margin_right = 130.0
 margin_bottom = 136.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 align = 2
 
-[node name="Connection" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
+[node name="ContributionPoint" type="Label" parent="Panel/Status/Requires"]
 margin_top = 140.0
 margin_right = 130.0
 margin_bottom = 171.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
+text = "50"
 align = 2
 
-[node name="JobForSoc" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
+[node name="Money" type="Label" parent="Panel/Status/Requires"]
 margin_top = 175.0
 margin_right = 130.0
 margin_bottom = 206.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "50"
 align = 2
 
-[node name="Student" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
-margin_top = 210.0
-margin_right = 130.0
-margin_bottom = 241.0
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "5"
-align = 2
-
-[node name="PostDoc" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
-margin_top = 245.0
-margin_right = 130.0
-margin_bottom = 276.0
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "10"
-align = 2
-
-[node name="ResearchTime" type="Label" parent="Panel/HBoxContainer2/PersonalStatus"]
-margin_top = 280.0
-margin_right = 130.0
-margin_bottom = 311.0
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-align = 2
-
-[node name="PersonalStatus2" type="VBoxContainer" parent="Panel/HBoxContainer2"]
+[node name="Personal" type="VBoxContainer" parent="Panel/Status"]
 margin_left = 268.0
 margin_right = 398.0
-margin_bottom = 346.0
-rect_min_size = Vector2( 130, 0 )
+margin_bottom = 220.0
+rect_min_size = Vector2( 130, 180 )
 
-[node name="Title" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
+[node name="Title" type="Label" parent="Panel/Status/Personal"]
 margin_right = 130.0
 margin_bottom = 31.0
 rect_min_size = Vector2( 130, 0 )
@@ -221,7 +164,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Time" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
+[node name="ResearchLevel" type="Label" parent="Panel/Status/Personal"]
 margin_top = 35.0
 margin_right = 130.0
 margin_bottom = 66.0
@@ -233,15 +176,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Fixed" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
+[node name="UniversityPoint" type="Label" parent="Panel/Status/Personal"]
 margin_top = 70.0
 margin_right = 130.0
 margin_bottom = 101.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "300"
+text = "50"
 align = 2
 
-[node name="JobForUniv" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
+[node name="ConnectionPoint" type="Label" parent="Panel/Status/Personal"]
 margin_top = 105.0
 margin_right = 130.0
 margin_bottom = 136.0
@@ -249,42 +192,18 @@ custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "50"
 align = 2
 
-[node name="Connection" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
+[node name="ContributionPoint" type="Label" parent="Panel/Status/Personal"]
 margin_top = 140.0
 margin_right = 130.0
 margin_bottom = 171.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "50"
-align = 2
-
-[node name="JobForSoc" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
-margin_top = 175.0
-margin_right = 130.0
-margin_bottom = 206.0
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "20"
 align = 2
 
-[node name="Student" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
-margin_top = 210.0
+[node name="Money" type="Label" parent="Panel/Status/Personal"]
+margin_top = 175.0
 margin_right = 130.0
-margin_bottom = 241.0
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "3"
-align = 2
-
-[node name="PostDoc" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
-margin_top = 245.0
-margin_right = 130.0
-margin_bottom = 276.0
-custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
-text = "1"
-align = 2
-
-[node name="ResearchTime" type="Label" parent="Panel/HBoxContainer2/PersonalStatus2"]
-margin_top = 280.0
-margin_right = 130.0
-margin_bottom = 311.0
+margin_bottom = 206.0
 custom_colors/font_color = Color( 0.768627, 0.768627, 0.768627, 1 )
 text = "50000000"
 align = 2

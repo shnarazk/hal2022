@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Researcher",
 "language": "GDScript",
 "path": "res://Researcher.gd"
+}, {
+"base": "Node",
+"class": "skill",
+"language": "GDScript",
+"path": "res://model/skill.gd"
 } ]
 _global_script_class_icons={
 "Assistant": "",
 "Professor": "",
-"Researcher": ""
+"Researcher": "",
+"skill": ""
 }
 
 [application]

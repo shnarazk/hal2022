@@ -12,9 +12,13 @@ var number_of_students = 0
 var number_of_postdocs = 0
 var university = "T大"
 var level_in_university = 1
+var university_point = 10
 var level_in_society = 1
+var connection_point = 10
+var contribution_point = 10
 var step = 0
 var event_hour = 0
+var money = 0
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -30,6 +34,7 @@ func _ready():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
+	update_state_panel()
 	update_research_hour()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -58,9 +63,7 @@ func _on_Button_pressed():
 	if rank == 0:
 		var new_year = $GameSpace/AssistantLife.go_forward(s)
 		if new_year:
-			year += 1
-			$StatusReport.display("研究者になって%s年が経ちました" %  year)
-			print(year)
+			year_end()
 	else:
 		$GameSpace/ProfessorLife.go_forward(s)
 
@@ -82,6 +85,12 @@ func _on_event_happened(priority, message):
 		$GameSpace/ProfessorLife.show()
 		$StatusReport.display("教授になりました")
 
+func year_end():
+	year += 1
+	$StatusReport.display("研究者になって%s年が経ちました" %  year)
+	number_of_postdocs = 0
+	number_of_students = 0
+
 func update_research_hour():
 	hour += number_of_students * 50
 	$ResearchPanel/Panel/Resource/TimeTable/Team/Student.text = "%s(%s人)" % [number_of_students, number_of_students * 50]
@@ -98,6 +107,13 @@ func update_research_hour():
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % (hour - event_hour)
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/WritingTime.text = "%s" % writing_hour
 	$RsearchPanel/Panel/Resource/Resource
+
+func update_state_panel():
+	$StatusPanel/Panel/Status/Personal/ResearchLevel.text = '%d' % researcher_level
+	$StatusPanel/Panel/Status/Personal/UniversityPoint.text = '%d' % university_point
+	$StatusPanel/Panel/Status/Personal/ConnectionPoint.text = '%d' % connection_point
+	$StatusPanel/Panel/Status/Personal/ContributionPoint.text = '%d' % contribution_point
+	$StatusPanel/Panel/Status/Personal/Money.text = '%d' % money
 
 func _on_Level1Button_pressed():
 	$Console/Level1Button.disabled = true
@@ -121,4 +137,4 @@ func _on_Level3Button_pressed():
 	$Console/Level3Button.disabled = true
 	writing_hour = 0
 	update_research_hour()
-	$StatusReport.display("論文を投稿しました")	
+	$StatusReport.display("論文を投稿しました")
