@@ -2,7 +2,7 @@ extends Node
 class_name Job
 
 # export(PackedScene) var Event
-signal event_happened
+signal event_happened(event_descriptor)
 
 # Declare member variables here. Examples:
 var period: Array = []
@@ -29,10 +29,12 @@ func go_forward(step: int):
 	if period.size() <= current:
 		current = 0
 		new_year = true
-	period[current].select()
-	# print(scheduled_event[1])
-	if scheduled_event[current] != null:
-		emit_signal("event_happened", 0, scheduled_event[current])
+	var e = period[current].select()
+	if e != null:
+		# print(e)
+		emit_signal("event_happened", e)
+	elif scheduled_event[current] != null:
+		emit_signal("event_happened", scheduled_event[current])
 	else:
 		var nev = event.size()
 		var chance = int((rand_range(0, nev + 0.1) * rand_range(0, nev + 0.1)) / nev)
@@ -40,7 +42,7 @@ func go_forward(step: int):
 			chance = nev - 1
 		# print(chance)
 		if event[chance] != null:
-			emit_signal("event_happened", 1, event[chance])
+			emit_signal("event_happened", event[chance])
 	return new_year
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

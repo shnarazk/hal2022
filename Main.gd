@@ -43,13 +43,16 @@ func _on_Button_pressed():
 	if new_year:
 		year_end()
 
-func _on_event_happened(_priority, message):
-	# print(message)
+func _on_event_happened(event):
+	print(event)
 	# return
-	$EventHappened.display(message["id"])
-	if message["type"] == "univ":
-		player.event_hour += message["hour"]
-		player.event_hour += message["hour"]
+	if event.get("optional", false):
+		$EventHappened.display(event["id"] + "かも")
+	else:
+		$EventHappened.display(event["id"])
+	if event.has("type") and event["type"] == "univ":
+		player.event_hour += event["hour"]
+		player.event_hour += event["hour"]
 		update_research_hour()
 
 func year_end():
