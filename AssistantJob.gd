@@ -1,7 +1,27 @@
-extends Researcher
+extends Job
 class_name Assistant
 
-# Declare member variables here. Examples:
+var my_event_type = [
+	"wild",
+	"university",
+	"money",
+	"wild",
+	"society",
+	"chance",
+	"private",
+	"wild",
+	"society",
+	"university",
+	"wild",
+	"money",
+	"chance",
+	"wild",
+	"society",
+	"private",
+	"wild",
+	"university"
+]
+
 var my_scheduled_event = [
 	# 1月
 	{ "id": "1月卒業研究指導", "type": "univ", "hour": 100 },
@@ -39,3 +59,4 @@ var my_event = [
 func _init():
 	scheduled_event = my_scheduled_event
 	event = my_event
+	event_type = my_event_type

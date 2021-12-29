@@ -1,5 +1,5 @@
 extends Node
-class_name skill
+class_name Skill
 
 var levels = [
 	{"level": 1, "requires": [0, 0, 0, 0, 0], "points": [0, 0, 0]},

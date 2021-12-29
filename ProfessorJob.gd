@@ -1,5 +1,26 @@
-extends Researcher
+extends Job
 class_name Professor
+
+var my_event_type = [
+	"university",
+	"wild",
+	"private",
+	"university",
+	"society",
+	"chance",
+	"wild",
+	"money",
+	"private",
+	"university",
+	"wild",
+	"money",
+	"chance",
+	"society",
+	"university",
+	"wild",
+	"private",
+	"university"
+]
 
 var my_scheduled_event = [
 	# 1月
@@ -40,3 +61,4 @@ var my_event = [
 func _init():
 	scheduled_event = my_scheduled_event
 	event = my_event
+	event_type = my_event_type

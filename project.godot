@@ -9,37 +9,37 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Researcher",
+"base": "Job",
 "class": "Assistant",
 "language": "GDScript",
 "path": "res://AssistantJob.gd"
+}, {
+"base": "Node",
+"class": "Job",
+"language": "GDScript",
+"path": "res://Job.gd"
 }, {
 "base": "Node",
 "class": "Player",
 "language": "GDScript",
 "path": "res://model/Player.gd"
 }, {
-"base": "Researcher",
+"base": "Job",
 "class": "Professor",
 "language": "GDScript",
 "path": "res://ProfessorJob.gd"
 }, {
 "base": "Node",
-"class": "Researcher",
-"language": "GDScript",
-"path": "res://Researcher.gd"
-}, {
-"base": "Node",
-"class": "skill",
+"class": "Skill",
 "language": "GDScript",
 "path": "res://model/skill.gd"
 } ]
 _global_script_class_icons={
 "Assistant": "",
+"Job": "",
 "Player": "",
 "Professor": "",
-"Researcher": "",
-"skill": ""
+"Skill": ""
 }
 
 [application]
