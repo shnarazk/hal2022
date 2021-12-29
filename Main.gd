@@ -6,8 +6,8 @@ var step = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	$EventHappened.hide()
-	$StatusReport.hide()
+	$Console/EventHappened.hide()
+	$Console/StatusReport.hide()
 	$GameSpace/ProfessorLife.hide()
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
@@ -20,8 +20,8 @@ func _ready():
 #	pass
 
 func _on_Button_pressed():
-	$EventHappened/EventDisplayTimer.stop()
-	$EventHappened.hide()
+	$Console/EventHappened/EventDisplayTimer.stop()
+	$Console/EventHappened.hide()
 	var s = int((rand_range(0, 3.3) * rand_range(0, 3.3)) / 3  + 1)
 	step += s
 	$Console/Level1Button.disabled = true
@@ -49,9 +49,9 @@ func _on_event_happened(event):
 	print(event)
 	# return
 	if event.get("optional", false):
-		$EventHappened.display(event["id"] + "かも")
+		$Console/EventHappened.display(event["id"] + "かも")
 	else:
-		$EventHappened.display(event["id"])
+		$Console/EventHappened.display(event["id"])
 	if event.has("type") and event["type"] == "univ":
 		player.event_hour += event["hour"]
 		player.event_hour += event["hour"]
@@ -61,17 +61,17 @@ func _on_event_happened(event):
 func year_end():
 	var ret = player.year_end()
 	if ret == null:
-		$StatusReport.display("研究者になって%s年が経ちました" %  player.year)
+		$Console/StatusReport.display("研究者になって%s年が経ちました" %  player.year)
 		return
 	match ret["kind"]:
 		0:
 			$StatuReport.display(ret["message"])
 		1:
-			$StatusReport.display(ret["message"])
+			$Console/StatusReport.display(ret["message"])
 			$GameSpace/AssistantLife.hide()
 			$GameSpace/ProfessorLife.show()
 		2:
-			$StatusReport.display(ret["message"])
+			$Console/StatusReport.display(ret["message"])
 			# FIXME 強制終了の処理
 
 func update_research_hour():
@@ -95,7 +95,7 @@ func _on_Level1Button_pressed():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
-	$StatusReport.display("論文を投稿しました")
+	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(1)
 	update_research_hour()
 
@@ -103,7 +103,7 @@ func _on_Level2Button_pressed():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
-	$StatusReport.display("論文を投稿しました")
+	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(2)
 	update_research_hour()
 
@@ -111,6 +111,6 @@ func _on_Level3Button_pressed():
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
-	$StatusReport.display("論文を投稿しました")
+	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(3)
 	update_research_hour()

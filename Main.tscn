@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://font/NotoSansCJKjp-DemiLight.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
@@ -14,21 +14,53 @@
 [sub_resource type="StyleBoxTexture" id=19]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 356, 92 )
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxTexture" id=18]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 356, 92 )
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 356, 92 )
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxTexture" id=20]
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 356, 92 )
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.368627, 0.384314, 0.796078, 1 )
+
+[sub_resource type="DynamicFont" id=21]
+size = 22
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=22]
+content_margin_left = 20.0
+content_margin_right = 10.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 356, 92 )
+margin_left = 8.0
+margin_right = 8.0
+margin_top = 8.0
+margin_bottom = 8.0
 
 [sub_resource type="DynamicFont" id=5]
 size = 20
@@ -47,6 +79,9 @@ Button/styles/hover = SubResource( 18 )
 Button/styles/normal = SubResource( 4 )
 Button/styles/pressed = SubResource( 20 )
 Panel/styles/panel = SubResource( 8 )
+RichTextLabel/colors/default_color = Color( 0, 0, 0, 1 )
+RichTextLabel/fonts/normal_font = SubResource( 21 )
+RichTextLabel/styles/normal = SubResource( 22 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -70,28 +105,6 @@ size = Vector3( 10, 0.1, 10 )
 [sub_resource type="DynamicFont" id=13]
 size = 82
 extra_spacing_char = 2
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=9]
-size = 40
-font_data = ExtResource( 1 )
-
-[sub_resource type="StyleBoxTexture" id=10]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 356, 92 )
-margin_left = 20.0
-
-[sub_resource type="DynamicFont" id=12]
-font_data = ExtResource( 1 )
-
-[sub_resource type="Theme" id=11]
-default_font = SubResource( 12 )
-RichTextLabel/colors/default_color = Color( 0.713726, 0.14902, 0.14902, 1 )
-RichTextLabel/fonts/normal_font = SubResource( 9 )
-RichTextLabel/styles/normal = SubResource( 10 )
-
-[sub_resource type="DynamicFont" id=17]
-size = 26
 font_data = ExtResource( 1 )
 
 [node name="Main" type="Spatial"]
@@ -288,19 +301,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EventHappened" type="RichTextLabel" parent="."]
+[node name="EventHappened" type="RichTextLabel" parent="Console"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -99.0
-margin_top = -115.0
+margin_top = -562.5
 margin_right = 464.0
-margin_bottom = -32.0
+margin_bottom = -479.5
 rect_min_size = Vector2( 200, 60 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = SubResource( 11 )
 text = "イベント通知ラベル"
 scroll_active = false
 script = ExtResource( 7 )
@@ -308,24 +320,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EventDisplayTimer" type="Timer" parent="EventHappened"]
+[node name="EventDisplayTimer" type="Timer" parent="Console/EventHappened"]
 wait_time = 4.0
 one_shot = true
 
-[node name="StatusReport" type="RichTextLabel" parent="."]
+[node name="StatusReport" type="RichTextLabel" parent="Console"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -257.0
-margin_top = 316.0
+margin_top = -131.5
 margin_right = 490.0
-margin_bottom = 399.0
+margin_bottom = -48.5
 rect_min_size = Vector2( 200, 60 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = SubResource( 11 )
-custom_fonts/normal_font = SubResource( 17 )
 text = "状況報告ラベル"
 scroll_active = false
 script = ExtResource( 8 )
@@ -333,7 +343,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EventDisplayTimer" type="Timer" parent="StatusReport"]
+[node name="EventDisplayTimer" type="Timer" parent="Console/StatusReport"]
 wait_time = 2.0
 one_shot = true
 
@@ -347,5 +357,5 @@ one_shot = true
 [connection signal="pressed" from="Console/Level3Button" to="." method="_on_Level3Button_pressed"]
 [connection signal="pressed" from="Console/Level4Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Console/Level5Button" to="." method="_on_Button_pressed"]
-[connection signal="timeout" from="EventHappened/EventDisplayTimer" to="EventHappened" method="_on_EventDisplayTimer_timeout"]
-[connection signal="timeout" from="StatusReport/EventDisplayTimer" to="StatusReport" method="_on_EventDisplayTimer_timeout"]
+[connection signal="timeout" from="Console/EventHappened/EventDisplayTimer" to="Console/EventHappened" method="_on_EventDisplayTimer_timeout"]
+[connection signal="timeout" from="Console/StatusReport/EventDisplayTimer" to="Console/StatusReport" method="_on_EventDisplayTimer_timeout"]
