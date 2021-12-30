@@ -15,7 +15,7 @@ func _ready():
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
 	update_state_panel()
-	update_research_hour()
+	update_research_panel()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -55,14 +55,13 @@ func _on_Button_pressed():
 		$ResearchPanel.show()
 
 func _on_event_happened(event):
-	print(event)
-	# return
+	#print(event)
 	if event.get("optional", false):
 		$Console/EventHappened.display(event["id"] + "かも")
 	else:
 		var e = player.accept_proposal(event)
 		$Console/EventHappened.display(e["id"])
-	update_research_hour()
+	update_research_panel()
 	update_state_panel()
 
 func year_end():
@@ -72,7 +71,7 @@ func year_end():
 		return
 	match ret["kind"]:
 		0:
-			$StatuReport.display(ret["message"])
+			$Console/StatusReport.display(ret["message"])
 		1:
 			$Console/StatusReport.display(ret["message"])
 			$GameSpace/AssistantStage.hide()
@@ -81,21 +80,21 @@ func year_end():
 			$Console/StatusReport.display(ret["message"])
 			# FIXME 強制終了の処理
 
-func update_research_hour():
-	player.update_research_hour()
-	var lab_hour = 50 * player.number_of_students + 100 * player.number_of_postdocs - player.student_hour["hour"] - player.postdoc_hour["hour"]
-	var my_hour = player.hour - player.university_hour - player.society_hour - player.private_hour
+func update_research_panel():
+	# player.update_research_hour()
+	var lab_hour = 50 * player.number_of_students + 100 * player.number_of_postdocs
+	var my_hour = player.hour - player.university_hour["hour"] - player.society_hour["hour"] - player.private_hour["hour"] - player.student_hour["hour"] - player.postdoc_hour["hour"]
 	$ResearchPanel/Panel/Resource/TimeTable/Team/Student.text = "%s(%s人)" % [player.number_of_students * 50, player.number_of_students]
 	$ResearchPanel/Panel/Resource/TimeTable/Team/PostDoc.text = "%s(%s人)" % [player.number_of_postdocs * 100, player.number_of_postdocs]
-	$ResearchPanel/Panel/Resource/TimeTable/Team/ResearchHour.text = "%d" % (50 * player.number_of_students + 100 * player.number_of_postdocs)
+	$ResearchPanel/Panel/Resource/TimeTable/Team/ResearchHour.text = "%d" % lab_hour
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/Time.text = "%s" % player.hour
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/UniversityHour.text = "%s" % -player.university_hour
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/SocietyHour.text = "%s" % -player.society_hour
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/PrivateHour.text = "%s" % -player.private_hour
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/UniversityHour.text = "%s" % -player.university_hour["hour"]
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/SocietyHour.text = "%s" % -player.society_hour["hour"]
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/PrivateHour.text = "%s" % -player.private_hour["hour"]
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/Student.text = "%s" % -player.student_hour["hour"]
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/PostDoc.text = "%s" % -player.postdoc_hour["hour"]
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/ResearchHour.text = "%s" % (player.hour - player.private_hour - player.university_hour - player.society_hour)
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % (my_hour + lab_hour)
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/ResearchHour.text = "%s" % my_hour
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % max(0, my_hour + lab_hour)
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/WritingTime.text = "%s" % player.writing_hour
 
 func update_state_panel():
@@ -111,7 +110,7 @@ func _on_Level1Button_pressed():
 	$Console/Level3Button.disabled = true
 	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(1)
-	update_research_hour()
+	update_research_panel()
 	update_state_panel()
 
 func _on_Level2Button_pressed():
@@ -120,7 +119,7 @@ func _on_Level2Button_pressed():
 	$Console/Level3Button.disabled = true
 	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(2)
-	update_research_hour()
+	update_research_panel()
 	update_state_panel()
 
 func _on_Level3Button_pressed():
@@ -129,7 +128,7 @@ func _on_Level3Button_pressed():
 	$Console/Level3Button.disabled = true
 	$Console/StatusReport.display("論文を投稿しました")
 	player.submit(3)
-	update_research_hour()
+	update_research_panel()
 	update_state_panel()
 
 func _on_StartButton_pressed():

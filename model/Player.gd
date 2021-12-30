@@ -9,19 +9,13 @@ var number_of_papers = [0, 1, 0, 0, 0]
 var skill_level = 1
 var hour = 600
 var writing_hour = 0
-var university_hour_default = 50
-var university_hour_year_init = university_hour_default
-var university_hour = university_hour_year_init
-var society_hour_default = 50
-var society_hour_year_init = society_hour_default
-var society_hour = society_hour_year_init
-var private_hour_default = 0
-var private_hour_year_init = private_hour_default
-var private_hour = private_hour_year_init
-var number_of_students = 0
+var university_hour = { "hour": 50, "year": 50, "default": 50 }
+var society_hour = { "hour": 50, "year": 50, "default": 50 }
+var private_hour = { "hour": 0, "year": 0, "default": 0 }
 var student_hour = { "hour": 0, "year": 0, "default": 0 }
-var number_of_postdocs = 0
 var postdoc_hour = { "hour": 0, "year": 0, "default": 0 }
+var number_of_postdocs = 0
+var number_of_students = 0
 # var postdoc_hour_default = 0
 # var postdoc_hour_year_init = postdoc_hour_default
 # var postdoc_hour = postdoc_hour_year_init
@@ -32,11 +26,11 @@ var university_point = 10
 var level_in_society = 1
 var connection_point = 10
 var contribution_point = 10
-var money = 500
+var money = 100
 var kaken = { "year": 0, "money": 1000 }
-var submission = [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 } ]
-var hour_for_paper =  [400, 900, 2000, 3400, 2800, 3200]
-var money_for_paper = [200, 500, 2000, 6000, 8000, 12000]
+var submission = [] # [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 } ]
+var hour_for_paper =  [400, 1000, 2000, 3400, 2800, 3200]
+var money_for_paper = [400, 400, 2000, 5000, 10000, 20000]
 
 func _init():
 	pass
@@ -51,25 +45,25 @@ func accept_proposal(event):
 			"hour":
 				print("hour : %s" % e)
 			"university_hour_tmp":
-				university_hour += effect.get("value", 0)
+				university_hour["hour"] += effect.get("value", 0)
 				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"university_hour_year":
-				university_hour += effect.get("value", 0)
-				university_hour_year_init += effect.get("value", 0)
+				university_hour["hour"] += effect.get("value", 0)
+				university_hour["year"] += effect.get("value", 0)
 				e["id"] += "（今年の仕事が%d時間増えました）" % effect.get("value", 0)
 			"society_hour_tmp":
-				society_hour += effect.get("value", 0)
+				society_hour["hour"] += effect.get("value", 0)
 				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"society_hour_year":
-				society_hour += effect.get("value", 0)
-				society_hour_year_init += effect.get("value", 0)
+				society_hour["hour"] += effect.get("value", 0)
+				society_hour["year"] += effect.get("value", 0)
 				e["id"] += "（今年の仕事が%d時間増えました）" % effect.get("value", 0)
 			"private_hour_tmp":
-				private_hour += effect.get("value", 0)
+				private_hour["hour"] += effect.get("value", 0)
 				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"private_hour_year":
-				private_hour += effect.get("value", 0)
-				private_hour_year_init += effect.get("value", 0)
+				private_hour["hour"] += effect.get("value", 0)
+				private_hour["year"] += effect.get("value", 0)
 				e["id"] += "（今年の仕事が%d時間増えました）" % effect.get("value", 0)
 			"student_hour_tmp":
 				student_hour["hour"] += effect.get("value", 0)
@@ -136,11 +130,11 @@ func submittable() -> int:
 	return 0
 
 func submit(level):
-	if submission.empty() and hour_for_paper[level] <= writing_hour:
-		submission.push_back({ "state": "submit", "wait": int(rand_range(1, 2)), "level": level, "confirm": 0 })
-		writing_hour -= hour_for_paper[level]
-		money -= money_for_paper[level]
-	print(submission)
+	assert(submission.empty() and hour_for_paper[level] <= writing_hour and money_for_paper[level] <= money)
+	submission.push_back({ "state": "submit", "wait": int(rand_range(1, 2)), "level": level, "confirm": 0 })
+	writing_hour -= hour_for_paper[level]
+	money -= money_for_paper[level]
+	# print(submission)
 
 class SubmissionSorter:
 	static func sort_waiting_time(a, b):
@@ -176,15 +170,16 @@ func update_submission():
 					submission.pop_front()
 					print(number_of_papers)
 					return { "id": "論文が受理されました。" }
-				if 0.1 * submission[0]["level"] < rand_range(0.0, 1.0):
+				if 0.1 + 0.1 * submission[0]["level"] < rand_range(0.0, 1.0):
 					if 2 < submission[0]["confirm"]:
 						submission.pop_front()
-						return { "id": "論文は不受理となりました。" }
-					if 200 <= writing_hour and submission[0]["confirm"] < 2:
-						submission[0]["confirm"] += 1
+						return { "id": "紹介の結果論文は不受理となりました。" }
+					submission[0]["confirm"] += 1
+					if 200 <= writing_hour and 100 < money and submission[0]["confirm"] < 2:
 						submission[0]["wait"] = int(rand_range(1, 3))
 						writing_hour -= 100
-						return { "id": "論文の内容について%d回目の照会がありました。100時間取られました。" % submission[0]["confirm"]}
+						money -= 100
+						return { "id": "論文の内容について%d回目の照会がありました。資金と時間を取られました。" % submission[0]["confirm"]}
 					else:
 						var count = submission[0]["confirm"]
 						submission.pop_front()
@@ -192,17 +187,17 @@ func update_submission():
 				else:
 					submission.pop_front()
 					return { "id": "論文は不受理となりました。" }
-			_: return null
+			# _: return null
 	return null
 
 func turn_end():
 	var lab_hour = 50 * number_of_students + 100 * number_of_postdocs - student_hour["hour"] - postdoc_hour["hour"]
-	var my_hour = hour - university_hour - society_hour - private_hour
-	writing_hour += my_hour + lab_hour
+	var my_hour = hour - university_hour["hour"] - society_hour["hour"] - private_hour["hour"]
+	writing_hour += max(0, my_hour + lab_hour)
 	hour = 600
-	university_hour = university_hour_year_init
-	society_hour = society_hour_year_init
-	private_hour = private_hour_year_init
+	university_hour["hour"] = university_hour["year"]
+	society_hour["hour"] = society_hour["year"]
+	private_hour["hour"] = private_hour["year"]
 	student_hour["hour"] = student_hour["year"]
 	postdoc_hour["hour"] = postdoc_hour["year"]
 
@@ -211,13 +206,12 @@ func year_end():
 	if 30 < year:
 		return {"kind": 2, "message": "十分な実績を残すことができませんでした" }
 
-	university_hour_year_init = university_hour_default
-	society_hour_year_init = society_hour_default
-	private_hour_year_init = private_hour_default
-	university_hour = university_hour_year_init
-	society_hour = society_hour_year_init
-	private_hour = private_hour_year_init
-
+	university_hour["year"] = university_hour["default"]
+	university_hour["hour"] = university_hour["default"]
+	society_hour["year"] = society_hour["default"]
+	society_hour["hour"] = society_hour["default"]
+	private_hour["year"] = private_hour["default"]
+	private_hour["hour"] = private_hour["default"]
 	student_hour["year"] = student_hour["default"]
 	student_hour["hour"] = student_hour["default"]
 	postdoc_hour["year"] = postdoc_hour["default"]
@@ -233,15 +227,20 @@ func year_end():
 	number_of_postdocs = 0
 	number_of_students = 0
 	var level_up = false
-	if 2 < number_of_papers[0]:
+	if 2 < number_of_papers[skill_level]:
 		level_up = true
-		skill_level += 1
+		skill_level = min(skill_level + 1, 5)
 	var promoted = false
-	if -10 < skill_level and rank == 0:
+	var total_papers = 0
+	for n in number_of_papers:
+		total_papers += n
+	if rank == 0 and 5 < total_papers:
 		rank = 1
 		level_in_university += 1
 		level_in_society += 1
 		promoted = true
+	# 年度末でできるだけ使い切る
+	money /= 2
 	if rank == 0:
 		money += 100 + pow(university_rank, 2) * 50
 	else:
@@ -258,13 +257,3 @@ func year_end():
 		return { "kind": 1, "message": "教授に昇進しました" }
 	else:
 		return null
-
-func update_research_hour():
-	var total = hour
-	total += number_of_students * 50
-	total += number_of_postdocs * 50
-	total -= level_in_university * 40
-	total -= level_in_society * 40
-	if total < 0:
-		writing_hour += total
-		total = 0

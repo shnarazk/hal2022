@@ -21,7 +21,7 @@ var events = {
 			"require": "is_skill_level3",
 		},
 		{ "id": "学会表彰", "effect": [{ "type": "connection_point", "value": 1}]},
-		{ "id": "特許成立", "effect": [{ "type": "hour", "value": -20 }, {"type": "money", "value": 500}],
+		{ "id": "特許成立", "effect": [{ "type": "private_hour_tmp", "value": 20 }, {"type": "money", "value": 500}],
 			"require": "is_skill_level2"
 		},
 		{ "id": "T大学に移る",
@@ -43,10 +43,12 @@ var events = {
 	],
 	"money": [
 		null,
-		{ "id": "企業との共同研究", "effect": [{ "type": "hour", "value": -40 }, { "type": "money", "value": 2_500 }] },
-		{ "id": "科研費共同研究採択", "effect": [{ "type": "hour", "value": -100 }, { "type": "money", "value": 5_000 }] },
-		{ "id": "科研費大型プロジェクト採択", "effect": [{ "type": "hour", "value": -100 }, { "type": "money", "value": 15_000 }] },
-		{ "id": "経済産業省助成金獲得", "effect": [{ "type": "hour", "value": -50 }, { "type": "money", "value": 40_000 }],
+		{ "id": "企業との共同研究", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 500 }] },
+		{ "id": "科研費共同研究採択", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 1_000 }] },
+		{ "id": "科研費大型プロジェクト採択", "effect": [{ "type": "private_hour_year", "value": 100 }, { "type": "money", "value": 5_000 }],
+			"require": "is_skill_level3"
+		},
+		{ "id": "経済産業省助成金獲得", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 10_000 }],
 			"require": "is_skill_level3"
 		}
 	],
@@ -91,6 +93,8 @@ var events = {
 		{ "id": "学内不祥事対応", "effect": [{ "type": "university_hour_tmp", "value": 50 }, {"type": "university_point", "value": 4}] }
 	],
 	"wild": [
+		{ "id": "学内研究補助金獲得", "effect": [{ "type": "money", "value": 500 } ] },
+		{ "id": "海外研修", "effect": [{ "type": "private_hour_year", "value": 200 } ] },
 	]
 }
 
