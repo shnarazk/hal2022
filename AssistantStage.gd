@@ -11,13 +11,13 @@ var my_event_type = [
 	"private",
 	"university",
 	"society",
-	"university",
-	"wild",
 	"money",
-	"chance",
 	"wild",
-	"society",
 	"private",
+	"chance",
+	"university",
+	"society",
+	"wild",
 	"money",
 	"private"
 ]

@@ -250,7 +250,7 @@ func turn_end():
 
 func year_end():
 	year += 1
-	if 30 < year:
+	if 20 < year:
 		return {"kind": 2, "message": "十分な実績を残すことができませんでした" }
 	university_hour["year"] = university_hour["default"]
 	university_hour["hour"] = university_hour["default"]
@@ -262,7 +262,6 @@ func year_end():
 	student_hour["hour"] = student_hour["default"]
 	postdoc_hour["year"] = postdoc_hour["default"]
 	postdoc_hour["hour"] = postdoc_hour["default"]
-
 	if 0 < kaken["year"]:
 		kaken["year"] -= 1
 		money += kaken["money"]

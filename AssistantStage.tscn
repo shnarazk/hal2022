@@ -40,14 +40,14 @@ shadow_enabled = true
 transform = Transform( 1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, -0.8, 0, 0.5 )
 
 [node name="Camera" type="Camera" parent="CameraPosition"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 3 )
 current = true
 size = 3.0
 
 [node name="Board" type="Spatial" parent="."]
 
 [node name="logo" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.433013, 0, 0.25, 0, 0.5, 0, -0.25, 0, 0.433013, -2, -0.19, 2 )
+transform = Transform( 0.433013, 0, 0.25, 0, 0.5, 0, -0.25, 0, 0.433013, -2.5, -0.19, 2 )
 
 [node name="shazai" parent="." instance=ExtResource( 3 )]
 visible = false

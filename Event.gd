@@ -9,7 +9,7 @@ var radius = 1.5
 # var chance_material = load("art/Cell/chanceColor.tres")
 # var money_material = load("art/Cell/moneyColor.tres")
 var private_material = load("art/Cell/privateColor.tres")
-var society_material = load("art/Cell/societyColor.tres")
+# var society_material = load("art/Cell/societyColor.tres")
 # ar university_material = load("art/Cell/universityColor.tres")
 # var wild_material = load("art/Cell/wildColor.tres")
 var events = {
@@ -121,6 +121,7 @@ func _ready():
 	$Cell/Asterisk.hide()
 	$Cell/University.hide()
 	$Cell/Dollar.hide()
+	$Cell/Society.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -153,8 +154,7 @@ func set_kind(type):
 			$Cell/Default.set_surface_material(0, private_material)
 			$Cell/Default.show()
 		"society":
-			$Cell/Default.set_surface_material(0, society_material)
-			$Cell/Default.show()
+			$Cell/Society.show()
 		"university":
 			$Cell/University.show()
 		"wild":

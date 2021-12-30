@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://art/Cell/BasicEvent.tres" type="Material" id=1]
 [ext_resource path="res://Event.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://art/Cell/char-question.tscn" type="PackedScene" id=4]
 [ext_resource path="res://art/Cell/char-dollar.tscn" type="PackedScene" id=5]
 [ext_resource path="res://art/Cell/char-U.tscn" type="PackedScene" id=6]
+[ext_resource path="res://art/Cell/society.tscn" type="PackedScene" id=7]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -40,3 +41,6 @@ transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )
 
 [node name="University" parent="Cell" instance=ExtResource( 6 )]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0 )
+
+[node name="Society" parent="Cell" instance=ExtResource( 7 )]
+transform = Transform( 2.2, 0, 0, 0, 2.2, 0, 0, 0, 2.2, 0, 0, 0 )
