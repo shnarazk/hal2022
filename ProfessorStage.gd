@@ -53,9 +53,10 @@ var my_event = [
 	{ "id": "海外出張", "effect":[{ "type": "private_hour_tmp", "value": 200}] },
 	#{ "id": "共同研究", "type": "univ", "hour": 20 },
 	#{ "id": "国際会議実行委員", "type": "univ", "hour": 20 },
+	{ "id": "休日出勤", "effect":[{ "type": "university_hour_tmp", "value": -80}] },
 	{ "id": "体調不良", "effect": [{ "type": "university_hour_tmp", "value": 200 } ] },
-	{ "id": "アカハラ", "effect":[{"type": "university_hour_tmp", "value": 400 }] },
-	{ "id": "論文不正発覚", "effect":[{"type": "game_over", "image": null }]},
+	{ "id": "研究室でのアカハラに対応", "effect":[{"type": "university_hour_tmp", "value": 400 }] },
+	{ "id": "共同研究者の論文不正発覚", "effect":[{"type": "game_over", "image": null }]},
 ]
 
 func _init():
