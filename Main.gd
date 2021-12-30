@@ -41,6 +41,7 @@ func _on_Button_pressed():
 		if 2 < sl:
 			$Console/Level3Button.disabled = false
 	var new_year = false
+	print("paper work is %s" % paper_work)
 	if player.rank == 0:
 		new_year = $GameSpace/AssistantStage.go_forward(s, player, paper_work)
 	else:
@@ -57,8 +58,10 @@ func _on_Button_pressed():
 func _on_event_happened(event):
 	#print(event)
 	if event.get("optional", false):
-		var e = player.accept_proposal(event)
-		$Console/EventHappened.display("とりあえず" + e["id"])
+		var doit = 0.5 < rand_range(0, 1)
+		print("doit = %s" % doit)
+		var e = player.accept_proposal(event, doit)
+		$Console/EventHappened.display(("とりあえず" if doit else "断ったのは") + e["id"])
 	else:
 		var e = player.accept_proposal(event)
 		$Console/EventHappened.display(e["id"])
@@ -104,7 +107,7 @@ func update_state_panel():
 	$StatusPanel/Panel/Status/Personal/UniversityPoint.text = '%d' % player.university_point
 	$StatusPanel/Panel/Status/Personal/ConnectionPoint.text = '%d' % player.connection_point
 	$StatusPanel/Panel/Status/Personal/ContributionPoint.text = '%d' % player.contribution_point
-	$StatusPanel/Panel/Status/Personal/Money.text = '%d' % player.money
+	$StatusPanel/Panel/Status/Personal/Money.text = '%.2f M円' % player.money
 
 func _on_Level1Button_pressed():
 	$Console/Level1Button.disabled = true

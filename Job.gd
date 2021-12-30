@@ -30,19 +30,23 @@ func go_forward(step: int, player, picked_event):
 		current = 0
 		new_year = true
 	var e = period[current].select()
+	print("e: %s, %s" % [e, picked_event == null])
 	if picked_event != null and player.check_event_condition(picked_event):
 		emit_signal("event_happened", picked_event)
 	elif e != null and player.check_event_condition(e):
 		emit_signal("event_happened", e)
-	elif scheduled_event[current] != null and player.check_event_condition(scheduled_event[current]):
-		emit_signal("event_happened", scheduled_event[current])
 	else:
-		var nev = event.size()
-		var chance = int((rand_range(0, nev + 0.1) * rand_range(0, nev + 0.1)) / nev)
-		if nev <= chance:
-			chance = nev - 1
-		if event[chance] != null and player.check_event_condition(event[chance]):
-			emit_signal("event_happened", event[chance])
+		# try again
+		e = period[current].select()
+		if e != null and player.check_event_condition(e):
+			emit_signal("event_happened", e)
+		elif period[current].kind == "wild" or period[current].kind == "personal":
+			var nev = event.size()
+			var chance = int((rand_range(0, nev + 0.1) * rand_range(0, nev + 0.1)) / nev)
+			if chance < nev and event[chance] != null and player.check_event_condition(event[chance]):
+				emit_signal("event_happened", event[chance])
+			elif scheduled_event[current] != null and player.check_event_condition(scheduled_event[current]):
+				emit_signal("event_happened", scheduled_event[current])
 	return new_year
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

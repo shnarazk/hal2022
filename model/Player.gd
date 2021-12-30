@@ -28,13 +28,15 @@ var university_point = 10
 var level_in_society = 1
 var connection_point = 10
 var contribution_point = 10
-var money = 500
+var money = 0.5
 var kaken = { "year": 0, "money": 1000 }
 var kaken_submission = { "state": null, "wait": 8, "year": 0, "money": 0, "label": "" }
 var submission = [] # [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 } ]
 var hour_for_paper =  [400, 1000, 1600, 2200, 2800, 3200]
-var money_for_paper = [400, 400, 1200, 2000, 3000, 5000]
+var money_for_paper = [0.4, 0.4, 1.2, 2, 3, 5]
 var number_of_paper_this_year = 0
+var abroad = false
+var married = false
 
 func _init():
 	pass
@@ -42,9 +44,10 @@ func _init():
 func turn():
 	pass
 
-func accept_proposal(event):
+func accept_proposal(event, deny = false):
 	var e = event.duplicate(true)
-	for effect in e.get("effect", []):
+	var effects = e.get("decline", []) if deny else e.get("effect", [])
+	for effect in effects:
 		match effect.get("type", ""):
 			"hour":
 				print("hour : %s" % e)
@@ -91,7 +94,7 @@ func accept_proposal(event):
 				e["id"] += "（ポスドクが%d人増えました）" % effect.get("value", 0)
 			"money":
 				money += effect.get("value", 0)
-				e["id"] += "（研究費が%dK円増えました）" % effect.get("value", 0)
+				e["id"] += "（研究費が%.2fM円増えました）" % effect.get("value", 0)
 			"connection_point":
 				connection_point += effect.get("value", 0)
 				e["id"] += "（人脈ポイントが%d増えました）" % effect.get("value", 0)
@@ -111,6 +114,7 @@ func accept_proposal(event):
 				kaken["year"] = effect.get("year")
 				kaken["money"] = effect.get("money")
 				money += kaken["money"]
+				e["id"] += "（資金が%.2fM円増えました）" % kaken["money"]
 			"scientific misconduct":
 				number_of_papers[skill_level] = 0
 				number_of_papers[max(0, skill_level - 1)] = 0
@@ -118,6 +122,8 @@ func accept_proposal(event):
 				money /= 10
 				writing_hour = 0
 				e["id"] += "（研究者ランクが大きく下がりました）"
+			"abroad":
+				abroad = true
 			_: print("can't handle %s" % effect)
 	return e
 
@@ -138,6 +144,10 @@ func check_event_condition(event) -> bool:
 			return 0 < number_of_students
 		"not_applied":
 			return kaken_submission["state"] == null
+		"not_abroad":
+			return !abroad
+		"is_married":
+			return married
 		"":
 			return true
 		_:
@@ -182,7 +192,7 @@ func update_kaken_submission():
 			kaken["year"] = kaken_submission["year"]
 			kaken["money"] = kaken_submission["money"]
 			money += kaken["money"]
-			return { "id": "科研申請が採択されました。%d年間予算が増えました。" % kaken["year"]}
+			return { "id": "科研申請が採択されました。%.2f年間予算が増えました。" % kaken["year"]}
 		else:
 			kaken_submission["state"] = null
 			return { "id": "科研の申請は不採択でした。"}
@@ -222,10 +232,10 @@ func update_paper_submission():
 						submission.pop_front()
 						return { "id": "紹介の結果論文は不受理となりました。" }
 					submission[0]["confirm"] += 1
-					if 200 <= writing_hour and 100 < money and submission[0]["confirm"] < 2:
+					if 200 <= writing_hour and 1 < money and submission[0]["confirm"] < 2:
 						submission[0]["wait"] = int(rand_range(1, 3))
 						writing_hour -= 100
-						money -= 100
+						money -= 1
 						return { "id": "論文の内容について%d回目の照会がありました。資金と時間を取られました。" % submission[0]["confirm"]}
 					else:
 						var count = submission[0]["confirm"]
@@ -272,6 +282,7 @@ func year_end():
 	contribution_point += number_of_students
 	number_of_postdocs = 0
 	number_of_students = 0
+	abroad = false
 	var level_up = false
 	if 2 < number_of_papers[skill_level] and 1 < number_of_paper_this_year:
 		level_up = true
@@ -288,9 +299,9 @@ func year_end():
 	# 年度末でできるだけ使い切る。しかし勝手に資金が減るのは解せん
 	# money /= 2
 	if 0 < number_of_paper_this_year:
-		money += 300
+		money += 0.3
 	else:
-		money += 500 + pow(university_rank, 1.5) * 100
+		money += 0.5 + pow(university_rank, 1.5) * 0.1
 	if 0 < kaken["year"]:
 		kaken["year"] -= 1
 		money += kaken["money"]
