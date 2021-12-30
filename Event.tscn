@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://art/BasicEvent.tres" type="Material" id=1]
+[ext_resource path="res://art/Cell/BasicEvent.tres" type="Material" id=1]
 [ext_resource path="res://Event.gd" type="Script" id=2]
+[ext_resource path="res://art/Cell/char-asterisk.tscn" type="PackedScene" id=3]
+[ext_resource path="res://art/Cell/char-question.tscn" type="PackedScene" id=4]
+[ext_resource path="res://art/Cell/char-dollar.tscn" type="PackedScene" id=5]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -17,8 +20,19 @@ script = ExtResource( 2 )
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Cell"]
+visible = false
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Cell"]
+[node name="Default" type="MeshInstance" parent="Cell"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = ExtResource( 1 )
+
+[node name="Asterisk" parent="Cell" instance=ExtResource( 3 )]
+transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )
+
+[node name="Dollar" parent="Cell" instance=ExtResource( 5 )]
+transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )
+
+[node name="Question" parent="Cell" instance=ExtResource( 4 )]
+transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )

@@ -1,16 +1,17 @@
 extends Spatial
 
+var initialized = false
 var active = false
-var kind = ""
+var kind = null
 var radius = 1.5
-var basic_material = load("art/BasicEvent.tres")
-var advanced_material = load("art/AdvancedEvent.tres")
-var chance_material = load("art/chanceColor.tres")
-var money_material = load("art/moneyColor.tres")
-var private_material = load("art/privateColor.tres")
-var society_material = load("art/societyColor.tres")
-var university_material = load("art/universityColor.tres")
-var wild_material = load("art/wildColor.tres")
+# var basic_material = load("art/Cell/BasicEvent.tres")
+# var advanced_material = load("art/Cell/AdvancedEvent.tres")
+# var chance_material = load("art/Cell/chanceColor.tres")
+# var money_material = load("art/Cell/moneyColor.tres")
+var private_material = load("art/Cell/privateColor.tres")
+var society_material = load("art/Cell/societyColor.tres")
+var university_material = load("art/Cell/universityColor.tres")
+# var wild_material = load("art/Cell/wildColor.tres")
 var events = {
 	"chance": [
 		null,
@@ -104,14 +105,21 @@ func deselect():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Cell.translation.x = radius
+	$Cell/Default.hide()
+	$Cell/Question.hide()
+	$Cell/Asterisk.hide()
+	$Cell/Dollar.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if initialized == false:
+		set_kind(kind)
+		initialized = true
 	if active:
 		$Cell.rotate_z(0.5 * delta)
 
 func upgrade():
-	$Cell/MeshInstance.set_surface_material(0, advanced_material)
+	# $Cell/Default.set_surface_material(0, advanced_material)
 	pass
 
 func pickup_event():
@@ -125,11 +133,21 @@ func pickup_event():
 
 func set_kind(type):
 	match type:
-		"chance": $Cell/MeshInstance.set_surface_material(0, chance_material)
-		"money": $Cell/MeshInstance.set_surface_material(0, money_material)
-		"private": $Cell/MeshInstance.set_surface_material(0, private_material)
-		"society": $Cell/MeshInstance.set_surface_material(0, society_material)
-		"university": $Cell/MeshInstance.set_surface_material(0, university_material)
-		"wild": $Cell/MeshInstance.set_surface_material(0, wild_material)
+		"chance":
+			$Cell/Question.show()
+			$Cell/Default.hide()
+		"money":
+			$Cell/Dollar.show()
+		"private":
+			$Cell/Default.set_surface_material(0, private_material)
+			$Cell/Default.show()
+		"society":
+			$Cell/Default.set_surface_material(0, society_material)
+			$Cell/Default.show()
+		"university":
+			$Cell/Default.set_surface_material(0, university_material)
+			$Cell/Default.show()
+		"wild":
+			$Cell/Asterisk.show()
 		_: print("error")
 	kind = type
