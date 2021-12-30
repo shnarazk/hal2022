@@ -34,7 +34,7 @@ var connection_point = 10
 var contribution_point = 10
 var money = 500
 var kaken = { "year": 0, "money": 1000 }
-var submission = [{ "state": "submit", "wait": 2, "level": 1 } ]
+var submission = [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 } ]
 var hour_for_paper =  [400, 900, 2000, 3400, 2800, 3200]
 var money_for_paper = [200, 500, 2000, 6000, 8000, 12000]
 
@@ -45,49 +45,66 @@ func turn():
 	pass
 
 func accept_proposal(event):
-	for effect in event.get("effect", []):
+	var e = event.duplicate(true)
+	for effect in e.get("effect", []):
 		match effect.get("type", ""):
 			"hour":
-				print("hour : %s" % event)
+				print("hour : %s" % e)
 			"university_hour_tmp":
 				university_hour += effect.get("value", 0)
+				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"university_hour_year":
 				university_hour += effect.get("value", 0)
 				university_hour_year_init += effect.get("value", 0)
+				e["id"] += "（今年の仕事が%d時間増えました）" % effect.get("value", 0)
 			"society_hour_tmp":
 				society_hour += effect.get("value", 0)
+				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"society_hour_year":
 				society_hour += effect.get("value", 0)
 				society_hour_year_init += effect.get("value", 0)
+				e["id"] += "（今年の仕事が%d時間増えました）" % effect.get("value", 0)
 			"private_hour_tmp":
 				private_hour += effect.get("value", 0)
+				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"private_hour_year":
 				private_hour += effect.get("value", 0)
 				private_hour_year_init += effect.get("value", 0)
+				e["id"] += "（今年の仕事が%d時間増えました）" % effect.get("value", 0)
 			"student_hour_tmp":
 				student_hour["hour"] += effect.get("value", 0)
+				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"student_hour_year":
 				student_hour["hour"] += effect.get("value", 0)
 				student_hour["year"] += effect.get("value", 0)
+				e["id"] += "（今年の打ち合わせが%d時間増えました）" % effect.get("value", 0)
 			"postdoc_hour_tmp":
 				postdoc_hour["hour"] += effect.get("value", 0)
+				e["id"] += "（%d時間費やしました）" % effect.get("value", 0)
 			"postdoc_hour_year":
 				postdoc_hour["hour"] += effect.get("value", 0)
 				postdoc_hour["year"] += effect.get("value", 0)
+				e["id"] += "（今年の打ち合わせが%d時間増えました）" % effect.get("value", 0)
 			"number_of_student":
 				number_of_students += effect.get("value", 0)
+				e["id"] += "（卒論生が%d人増えました）" % effect.get("value", 0)
 			"number_of_postdoc":
 				number_of_postdocs += effect.get("value", 0)
+				e["id"] += "（ポスドクが%d人増えました）" % effect.get("value", 0)
 			"money":
 				money += effect.get("value", 0)
+				e["id"] += "（研究費が%dK円増えました）" % effect.get("value", 0)
 			"connection_point":
 				connection_point += effect.get("value", 0)
+				e["id"] += "（人脈ポイントが%d増えました）" % effect.get("value", 0)
 			"university_point":
 				university_point += effect.get("value", 0)
+				e["id"] += "（学内ポイントが%d増えました）" % effect.get("value", 0)
 			"society_point":
 				contribution_point += effect.get("value", 0)
+				e["id"] += "（学会ポイントが%d増えました）" % effect.get("value", 0)
 			_: print("can't handle %s" % effect)
-	pass
+	return e
 
 func reject_proposal(_event):
 	pass
@@ -110,6 +127,7 @@ func check_event_condition(event) -> bool:
 			print(event)
 			return false
 
+## とりあえず同時投稿は禁止する
 func submittable() -> int:
 	if !submission.empty(): return 0
 	for i in [3, 2, 1]:
@@ -119,7 +137,7 @@ func submittable() -> int:
 
 func submit(level):
 	if submission.empty() and hour_for_paper[level] <= writing_hour:
-		submission.push_back({ "state": "submit", "wait": int(rand_range(1, 2)), "level": level })
+		submission.push_back({ "state": "submit", "wait": int(rand_range(1, 2)), "level": level, "confirm": 0 })
 		writing_hour -= hour_for_paper[level]
 		money -= money_for_paper[level]
 	print(submission)
@@ -149,19 +167,31 @@ func update_submission():
 	submission[0]["wait"] -= 1
 	if submission[0]["wait"] == 0:
 		match submission[0]["state"]:
-			"submit":
+			# 状態によるアクション選択はとりあえず中止
+			_:
 				# submission[0]["state"] = "wait_expire"
 				# submission[0]["wait"] = 2
-				if 0.6 < rand_range(0.0, 1.0):
+				if 0.35 + 0.15 * (submission[0]["level"] - 0.5 * skill_level) < rand_range(0.0, 1.0):
 					number_of_papers[submission[0]["level"]] += 1
 					submission.pop_front()
 					print(number_of_papers)
-					return { "id": "論文が受理されました" }
-				if 0.5 < rand_range(0.0, 1.0):
-					return { "id": "論文の内容について1回目の照会です" }
+					return { "id": "論文が受理されました。" }
+				if 0.1 * submission[0]["level"] < rand_range(0.0, 1.0):
+					if 2 < submission[0]["confirm"]:
+						submission.pop_front()
+						return { "id": "論文は不受理となりました。" }
+					if 200 <= writing_hour and submission[0]["confirm"] < 2:
+						submission[0]["confirm"] += 1
+						submission[0]["wait"] = int(rand_range(1, 3))
+						writing_hour -= 100
+						return { "id": "論文の内容について%d回目の照会がありました。100時間取られました。" % submission[0]["confirm"]}
+					else:
+						var count = submission[0]["confirm"]
+						submission.pop_front()
+						return { "id": "投稿論文について%d回目の照会がありましたが対応できませんでした。" % count}
 				else:
 					submission.pop_front()
-					return { "id": "論文は不受理となりました" }
+					return { "id": "論文は不受理となりました。" }
 			_: return null
 	return null
 

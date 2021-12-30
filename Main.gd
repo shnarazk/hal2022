@@ -60,8 +60,8 @@ func _on_event_happened(event):
 	if event.get("optional", false):
 		$Console/EventHappened.display(event["id"] + "かも")
 	else:
-		$Console/EventHappened.display(event["id"])
-		player.accept_proposal(event)
+		var e = player.accept_proposal(event)
+		$Console/EventHappened.display(e["id"])
 	update_research_hour()
 	update_state_panel()
 
@@ -89,14 +89,14 @@ func update_research_hour():
 	$ResearchPanel/Panel/Resource/TimeTable/Team/PostDoc.text = "%s(%s人)" % [player.number_of_postdocs * 100, player.number_of_postdocs]
 	$ResearchPanel/Panel/Resource/TimeTable/Team/ResearchHour.text = "%d" % (50 * player.number_of_students + 100 * player.number_of_postdocs)
 	$ResearchPanel/Panel/Resource/TimeTable/Personal/Time.text = "%s" % player.hour
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/UniversityHour.text = "u%s" % -player.university_hour
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/SocietyHour.text = "s%s" % -player.society_hour
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/PrivateHour.text = "p%s" % -player.private_hour
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/Student.text = "s%s" % -player.student_hour["hour"]
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/PostDoc.text = "p%s" % -player.postdoc_hour["hour"]
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/ResearchHour.text = "r%s" % (player.hour - player.private_hour - player.university_hour - player.society_hour)
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "t%s" % (my_hour + lab_hour)
-	$ResearchPanel/Panel/Resource/TimeTable/Personal/WritingTime.text = "w%s" % player.writing_hour
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/UniversityHour.text = "%s" % -player.university_hour
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/SocietyHour.text = "%s" % -player.society_hour
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/PrivateHour.text = "%s" % -player.private_hour
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/Student.text = "%s" % -player.student_hour["hour"]
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/PostDoc.text = "%s" % -player.postdoc_hour["hour"]
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/ResearchHour.text = "%s" % (player.hour - player.private_hour - player.university_hour - player.society_hour)
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/TotalHour.text = "%s" % (my_hour + lab_hour)
+	$ResearchPanel/Panel/Resource/TimeTable/Personal/WritingTime.text = "%s" % player.writing_hour
 
 func update_state_panel():
 	$StatusPanel/Panel/Status/Personal/ResearchLevel.text = '%dx%d' % [player.skill_level, player.number_of_papers[1]]
