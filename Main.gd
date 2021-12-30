@@ -57,7 +57,8 @@ func _on_Button_pressed():
 func _on_event_happened(event):
 	#print(event)
 	if event.get("optional", false):
-		$Console/EventHappened.display(event["id"] + "かも")
+		var e = player.accept_proposal(event)
+		$Console/EventHappened.display("とりあえず" + e["id"])
 	else:
 		var e = player.accept_proposal(event)
 		$Console/EventHappened.display(e["id"])
@@ -78,7 +79,8 @@ func year_end():
 			$GameSpace/ProfessorStage.show()
 		2:
 			$Console/StatusReport.display(ret["message"])
-			# FIXME 強制終了の処理
+			# Game Over
+			$OpeningPanel.show()
 
 func update_research_panel():
 	# player.update_research_hour()

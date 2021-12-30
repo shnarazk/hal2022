@@ -15,7 +15,9 @@ var private_hour = { "hour": 0, "year": 0, "default": 0 }
 var student_hour = { "hour": 0, "year": 0, "default": 0 }
 var postdoc_hour = { "hour": 0, "year": 0, "default": 0 }
 var number_of_postdocs = 0
+var number_of_ex_postdocs = 0
 var number_of_students = 0
+var number_of_ex_students = 0
 # var postdoc_hour_default = 0
 # var postdoc_hour_year_init = postdoc_hour_default
 # var postdoc_hour = postdoc_hour_year_init
@@ -26,11 +28,13 @@ var university_point = 10
 var level_in_society = 1
 var connection_point = 10
 var contribution_point = 10
-var money = 100
+var money = 500
 var kaken = { "year": 0, "money": 1000 }
+var kaken_submission = { "state": null, "wait": 8, "year": 0, "money": 0, "label": "" }
 var submission = [] # [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 } ]
-var hour_for_paper =  [400, 1000, 2000, 3400, 2800, 3200]
-var money_for_paper = [400, 400, 2000, 5000, 10000, 20000]
+var hour_for_paper =  [400, 1000, 1600, 2200, 2800, 3200]
+var money_for_paper = [400, 400, 1200, 2000, 3000, 5000]
+var number_of_paper_this_year = 0
 
 func _init():
 	pass
@@ -97,6 +101,23 @@ func accept_proposal(event):
 			"society_point":
 				contribution_point += effect.get("value", 0)
 				e["id"] += "（学会ポイントが%d増えました）" % effect.get("value", 0)
+			"apply_kaken":
+				kaken_submission["state"] = "apply"
+				kaken_submission["wait"] = effect.get("wait")
+				kaken_submission["year"] = effect.get("year")
+				kaken_submission["money"] = effect.get("money")
+			"kaken_money":
+				kaken["state"] = "accepted"
+				kaken["year"] = effect.get("year")
+				kaken["money"] = effect.get("money")
+				money += kaken["money"]
+			"scientific misconduct":
+				number_of_papers[skill_level] = 0
+				number_of_papers[max(0, skill_level - 1)] = 0
+				skill_level = max(1, skill_level - 2)
+				money /= 10
+				writing_hour = 0
+				e["id"] += "（研究者ランクが大きく下がりました）"
 			_: print("can't handle %s" % effect)
 	return e
 
@@ -115,10 +136,12 @@ func check_event_condition(event) -> bool:
 			return 0 < number_of_postdocs
 		"has_student":
 			return 0 < number_of_students
+		"not_applied":
+			return kaken_submission["state"] == null
 		"":
 			return true
 		_:
-			print(event)
+			print("can't check condition of %s" % event)
 			return false
 
 ## とりあえず同時投稿は禁止する
@@ -142,7 +165,30 @@ class SubmissionSorter:
 			return true
 		return false
 
+## メッセージが溢れないようにターンで更新されるキューは一つだけにする
 func update_submission():
+	var ret = update_kaken_submission()
+	if ret != null:
+		return ret
+	return update_paper_submission()
+
+func update_kaken_submission():
+	if kaken.get("state", null) == null:
+		return null
+	kaken_submission["wait"] -= 1
+	if kaken_submission["wait"] == 0:
+		if 0.6 < rand_range(0.0, 1.0):
+			kaken_submission["state"] = "accepted"
+			kaken["year"] = kaken_submission["year"]
+			kaken["money"] = kaken_submission["money"]
+			money += kaken["money"]
+			return { "id": "科研申請が採択されました。%d年間予算が増えました。" % kaken["year"]}
+		else:
+			kaken_submission["state"] = null
+			return { "id": "科研の申請は不採択でした。"}
+	pass
+
+func update_paper_submission():
 	if submission.size() == 0:
 		return null
 	var tmp = []
@@ -165,8 +211,9 @@ func update_submission():
 			_:
 				# submission[0]["state"] = "wait_expire"
 				# submission[0]["wait"] = 2
-				if 0.35 + 0.15 * (submission[0]["level"] - 0.5 * skill_level) < rand_range(0.0, 1.0):
+				if 0.4 + 0.15 * (submission[0]["level"] - 0.5 * skill_level) < rand_range(0.0, 1.0):
 					number_of_papers[submission[0]["level"]] += 1
+					number_of_paper_this_year += 1
 					submission.pop_front()
 					print(number_of_papers)
 					return { "id": "論文が受理されました。" }
@@ -205,7 +252,6 @@ func year_end():
 	year += 1
 	if 30 < year:
 		return {"kind": 2, "message": "十分な実績を残すことができませんでした" }
-
 	university_hour["year"] = university_hour["default"]
 	university_hour["hour"] = university_hour["default"]
 	society_hour["year"] = society_hour["default"]
@@ -220,14 +266,15 @@ func year_end():
 	if 0 < kaken["year"]:
 		kaken["year"] -= 1
 		money += kaken["money"]
-	else:
-		kaken["money"] = 0
+		if kaken["year"] == 0:
+			kaken_submission["state"] = null
+			kaken["money"] = 0
 	contribution_point += 10 * number_of_postdocs
 	contribution_point += number_of_students
 	number_of_postdocs = 0
 	number_of_students = 0
 	var level_up = false
-	if 2 < number_of_papers[skill_level]:
+	if 2 < number_of_papers[skill_level] and 1 < number_of_paper_this_year:
 		level_up = true
 		skill_level = min(skill_level + 1, 5)
 	var promoted = false
@@ -239,21 +286,22 @@ func year_end():
 		level_in_university += 1
 		level_in_society += 1
 		promoted = true
-	# 年度末でできるだけ使い切る
-	money /= 2
-	if rank == 0:
-		money += 100 + pow(university_rank, 2) * 50
+	# 年度末でできるだけ使い切る。しかし勝手に資金が減るのは解せん
+	# money /= 2
+	if 0 < number_of_paper_this_year:
+		money += 300
 	else:
-		money += 200 + pow(university_rank + skill_level, 1.8) * 200
+		money += 500 + pow(university_rank, 1.5) * 100
 	if 0 < kaken["year"]:
 		kaken["year"] -= 1
 		money += kaken["money"]
-	money += 1000 * skill_level
+	var np = number_of_paper_this_year
+	number_of_paper_this_year = 0
 	if level_up and promoted:
-		return { "kind": 1, "message": "教授に昇進し、研究レベルが上がりました" }
+		return { "kind": 1, "message": "教授に昇進し、研究レベルが上がりました。今年書いた論文は%d本です。" % np }
 	elif level_up:
-		return { "kind": 0, "message": "研究レベルが上がりました" }
+		return { "kind": 0, "message": "研究レベルが上がりました。今年書いた論文は%d本です。" % np }
 	elif promoted:
-		return { "kind": 1, "message": "教授に昇進しました" }
+		return { "kind": 1, "message": "教授に昇進しました。今年書いた論文は%d本です。" % np }
 	else:
-		return null
+		return { "kind": 0, "message": "1年が終わりました。今年書いた論文は%d本です。" % np }

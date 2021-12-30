@@ -10,7 +10,7 @@ var radius = 1.5
 # var money_material = load("art/Cell/moneyColor.tres")
 var private_material = load("art/Cell/privateColor.tres")
 var society_material = load("art/Cell/societyColor.tres")
-var university_material = load("art/Cell/universityColor.tres")
+# ar university_material = load("art/Cell/universityColor.tres")
 # var wild_material = load("art/Cell/wildColor.tres")
 var events = {
 	"chance": [
@@ -24,10 +24,10 @@ var events = {
 		{ "id": "特許成立", "effect": [{ "type": "private_hour_tmp", "value": 20 }, {"type": "money", "value": 500}],
 			"require": "is_skill_level2"
 		},
-		{ "id": "T大学に移る",
-			"optional": true,
-			 "effect": []
-		},
+		# { "id": "T大学に移る",
+		# 	"optional": true,
+		# 	 "effect": []
+		# },
 		{ "id": "国内学会招待講演",
 			"optional": true,
 			"effect": [{ "type": "hour", "value": -10 }, {"type": "society_point", "value": 5}, {"type": "connection_point", "value": 5}],
@@ -42,11 +42,15 @@ var events = {
 		}
 	],
 	"money": [
-		null,
-		{ "id": "企業との共同研究", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 500 }] },
-		{ "id": "科研費共同研究採択", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 1_000 }] },
-		{ "id": "科研費大型プロジェクト採択", "effect": [{ "type": "private_hour_year", "value": 100 }, { "type": "money", "value": 5_000 }],
-			"require": "is_skill_level3"
+		{ "id": "科研費B申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 7, "year": 2, "money": 2_000 } ], "require": "not_applied" },
+		{ "id": "学内研究補助金獲得", "effect": [{ "type": "money", "value": 500 } ] },
+		{ "id": "地元中小企業との共同研究", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 2_000 }] },
+		{ "id": "科研費C申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 2, "money": 1_000 } ], "require": "not_applied"},
+		{ "id": "科研費A申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 3, "money": 10_000 } ], "require": "not_applied"},
+		{ "id": "大企業との共同研究", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 6_000 }] },
+		{ "id": "科研費共同研究採択", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "kaken_money", "year":2, "money": 1_000 }], "require": "not_applied" },
+		{ "id": "科研費大型プロジェクト採択", "effect": [{ "type": "private_hour_year", "value": 100 }, { "type": "kaen_money", "year": 2, "money": 5_000 } ],
+			"require": "not_applied"
 		},
 		{ "id": "経済産業省助成金獲得", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 10_000 }],
 			"require": "is_skill_level3"
@@ -60,6 +64,7 @@ var events = {
 		{ "id": "交通事故で入院", "effect": [{ "type": "private_hour_tmp", "value": 300 },  { "type": "university_point", "value": -2}] }
 	],
 	"society": [
+		null,
 		{ "id": "論文査読",
 			"optional": true,
 			"effect": [{ "type": "society_hour_tmp", "value": 50 }, {"type": "society_point", "value": 5}],
@@ -80,6 +85,7 @@ var events = {
 		{ "id": "ポスドクとの打ち合わせ", "effect": [{ "type": "postdoc_hour_tmp", "value": 20 }],
 			"require": "has_postdoc"
 		},
+		{ "id": "学内研究補助金獲得", "effect": [{ "type": "money", "value": 1000 } ] },
 		{ "id": "学務委員選出", "effect": [{ "type": "university_hour_year", "value": 100 }, {"type": "university_point", "value": 1}] },
 		{ "id": "学科長選出", "effect": [{ "type": "university_hour_year", "value": 100 }, {"type": "university_point", "value": 4}],
 			"require": "is_professor"
@@ -93,7 +99,8 @@ var events = {
 		{ "id": "学内不祥事対応", "effect": [{ "type": "university_hour_tmp", "value": 50 }, {"type": "university_point", "value": 4}] }
 	],
 	"wild": [
-		{ "id": "学内研究補助金獲得", "effect": [{ "type": "money", "value": 500 } ] },
+		{ "id": "科研費C申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 2, "money": 1_000 } ], "require": "not_applied"},
+		{ "id": "科研費A申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 3, "money": 10_000 } ], "require": "not_applied"},
 		{ "id": "海外研修", "effect": [{ "type": "private_hour_year", "value": 200 } ] },
 	]
 }
@@ -112,6 +119,7 @@ func _ready():
 	$Cell/Default.hide()
 	$Cell/Question.hide()
 	$Cell/Asterisk.hide()
+	$Cell/University.hide()
 	$Cell/Dollar.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -120,7 +128,7 @@ func _process(delta):
 		set_kind(kind)
 		initialized = true
 	if active:
-		$Cell.rotate_z(0.5 * delta)
+		$Cell.rotate_z(0.8 * delta)
 
 func upgrade():
 	# $Cell/Default.set_surface_material(0, advanced_material)
@@ -139,7 +147,6 @@ func set_kind(type):
 	match type:
 		"chance":
 			$Cell/Question.show()
-			$Cell/Default.hide()
 		"money":
 			$Cell/Dollar.show()
 		"private":
@@ -149,8 +156,7 @@ func set_kind(type):
 			$Cell/Default.set_surface_material(0, society_material)
 			$Cell/Default.show()
 		"university":
-			$Cell/Default.set_surface_material(0, university_material)
-			$Cell/Default.show()
+			$Cell/University.show()
 		"wild":
 			$Cell/Asterisk.show()
 		_: print("error")
