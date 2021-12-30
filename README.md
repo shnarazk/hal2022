@@ -1,5 +1,8 @@
 # hal2022
 
+[test build](https://shnarazk.github.io/hal2022/index.html)
+
+
 - [Happy Academic Life 2006:研究者の人生ゲーム : ゲーム型キャリアデザイン学習教材の開発(<特集>人工知能学会創設20周年記念企画)](https://www.jstage.jst.go.jp/article/jjsai/21/3/21_360/_pdf/-char/ja), 
 人工知能学会誌（1986～2013, Print ISSN:0912-8085）
 
