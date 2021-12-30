@@ -41,7 +41,6 @@ func _on_Button_pressed():
 		if 2 < sl:
 			$Console/Level3Button.disabled = false
 	var new_year = false
-	print("paper work is %s" % paper_work)
 	if player.rank == 0:
 		new_year = $GameSpace/AssistantStage.go_forward(s, player, paper_work)
 	else:
@@ -59,8 +58,7 @@ func _on_event_happened(event):
 	#print(event)
 	if event.get("optional", false):
 		var doit = 0.5 < rand_range(0, 1)
-		print("doit = %s" % doit)
-		var e = player.accept_proposal(event, doit)
+		var e = player.accept_proposal(event, !doit)
 		$Console/EventHappened.display(("とりあえず" if doit else "断ったのは") + e["id"])
 	else:
 		var e = player.accept_proposal(event)

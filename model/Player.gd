@@ -32,8 +32,8 @@ var money = 0.5
 var kaken = { "year": 0, "money": 1000 }
 var kaken_submission = { "state": null, "wait": 8, "year": 0, "money": 0, "label": "" }
 var submission = [] # [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 } ]
-var hour_for_paper =  [400, 1000, 1600, 2200, 2800, 3200]
-var money_for_paper = [0.4, 0.4, 1.2, 2, 3, 5]
+var hour_for_paper =  [400, 1000, 1500, 2000, 2500, 3200]
+var money_for_paper = [0.4, 0.4, 1.2, 3, 3, 5]
 var number_of_paper_this_year = 0
 var abroad = false
 var married = false
@@ -225,7 +225,7 @@ func update_paper_submission():
 					number_of_papers[submission[0]["level"]] += 1
 					number_of_paper_this_year += 1
 					submission.pop_front()
-					print(number_of_papers)
+					# print(number_of_papers)
 					return { "id": "論文が受理されました。" }
 				if 0.1 + 0.1 * submission[0]["level"] < rand_range(0.0, 1.0):
 					if 2 < submission[0]["confirm"]:
