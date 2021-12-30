@@ -32,7 +32,7 @@ var money = 0.5
 var kaken = { "year": 0, "money": 1000 }
 var kaken_submission = { "state": null, "wait": 8, "year": 0, "money": 0, "label": "" }
 var submission = [] # [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 } ]
-var hour_for_paper =  [400, 1000, 1500, 2000, 2500, 3200]
+var hour_for_paper =  [400, 800, 1200, 1800, 2200, 2800]
 var money_for_paper = [0.4, 0.4, 1.2, 3, 3, 5]
 var number_of_paper_this_year = 0
 var abroad = false
@@ -297,7 +297,7 @@ func year_end():
 		level_in_society += 1
 		promoted = true
 	# 年度末でできるだけ使い切る。しかし勝手に資金が減るのは解せん
-	# money /= 2
+	money /= 2
 	if 0 < number_of_paper_this_year:
 		money += 0.3
 	else:
