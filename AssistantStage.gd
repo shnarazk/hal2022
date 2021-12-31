@@ -51,12 +51,12 @@ var my_scheduled_event = [
 
 var my_event = [
 	null,
-	{ "id": "出張", "optional": true, "effect":[{ "type": "private_hour_tmp", "value": 40}] },
-	{ "id": "論文査読", "optional": true, "effect":[ {"type":"society_hour_tmp", "value": 50}], "decilne": [{ "type": "society_point", "value": -1 }]},
-	{ "id": "海外出張", "optional": true, "effect":[{ "type": "private_hour_tmp", "value": 120}] },
-	{ "id": "地元中小企業との共同研究", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 1 }] },
-	{ "id": "アカハラ", "type": "special"},
-	{ "id": "論文不正発覚", "effect":[ {"type": "scientific misconduct", "image": null }] },
+	{ "id": "出張を考えています。", "optional": true, "effect":[{ "type": "private_hour_tmp", "value": 40}] },
+	{ "id": "論文査読の依頼がありました。", "optional": true, "effect":[ {"type":"society_hour_tmp", "value": 50}], "decilne": [{ "type": "society_point", "value": -1 }]},
+	{ "id": "海外出張を考えています。", "optional": true, "effect":[{ "type": "private_hour_tmp", "value": 120}] },
+	{ "id": "地元中小企業から共同研究の打診がありました。", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 1 }] },
+	{ "id": "アカハラに対応しました。", "type": "special"},
+	{ "id": "共同研究者の論文不正が発覚しました。", "effect":[ {"type": "scientific misconduct", "image": null }] },
 ]
 
 func _init():

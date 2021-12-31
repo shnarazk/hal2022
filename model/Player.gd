@@ -127,6 +127,14 @@ func accept_proposal(event, deny = false):
 				e["id"] += "（研究者ランクが大きく下がりました）"
 			"abroad":
 				abroad = true
+			"marry":
+				married = true
+				e["id"] += "（結婚しました）"
+			"new_university":
+				university_rank += 1
+				university_point = 5
+				money += 0.5
+				e["id"] += "（移動しました）"
 			_: print("can't handle %s" % effect)
 	return e
 
@@ -151,6 +159,8 @@ func check_event_condition(event) -> bool:
 			return !abroad
 		"is_married":
 			return married
+		"is_not_married":
+			return !married
 		"":
 			return true
 		_:

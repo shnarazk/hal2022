@@ -67,7 +67,7 @@ func _on_event_happened(event):
 	#print(event)
 	if event.get("optional", false):
 		hanging_event = event
-		$Console/EventHappened.display(hanging_event["id"] + "の依頼がありました。どうしますか？", true)
+		$Console/EventHappened.display(hanging_event["id"] + "どうしますか？", true)
 		$Console/Decision.show()
 		return
 		# var doit = 0.5 < rand_range(0, 1)

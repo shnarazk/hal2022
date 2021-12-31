@@ -167,7 +167,7 @@ margin_left = -260.0
 margin_top = -32.5
 margin_right = -40.0
 margin_bottom = 33.5
-text = "次に進む"
+text = "明日を迎える"
 expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -299,9 +299,9 @@ __meta__ = {
 }
 
 [node name="RejectButton" type="Button" parent="Console/Decision/VBoxContainer"]
-margin_top = 35.0
+margin_top = 40.0
 margin_right = 90.0
-margin_bottom = 66.0
+margin_bottom = 71.0
 rect_min_size = Vector2( 90, 0 )
 text = "断る"
 __meta__ = {
@@ -357,6 +357,7 @@ __meta__ = {
 }
 
 [node name="Ending" type="Panel" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 6 )
