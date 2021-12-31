@@ -1,6 +1,8 @@
 extends Node
 class_name Player
 
+signal game_over(finish, message)
+
 var rank = 0
 # var point = 0
 var year = 0
@@ -35,6 +37,7 @@ var submission = [] # [{ "state": "submit", "wait": 2, "level": 1, "confirm": 0 
 var hour_for_paper =  [400, 800, 1200, 1800, 2200, 2800]
 var money_for_paper = [0.4, 0.4, 1.2, 3, 3, 5]
 var number_of_paper_this_year = 0
+var no_paper_in_row = 0
 var abroad = false
 var married = false
 
@@ -258,10 +261,55 @@ func turn_end():
 	student_hour["hour"] = student_hour["year"]
 	postdoc_hour["hour"] = postdoc_hour["year"]
 
-func year_end():
-	year += 1
+func check_game_condition():
 	if 20 < year:
-		return {"kind": 2, "message": "十分な実績を残すことができませんでした" }
+		# return {"kind": 2, "message": "十分な実績を残すことができませんでした" }
+		emit_signal("game_over", false, "%d年研究しましたが十分な実績を残すことができませんでした" % year)
+		return true
+	if connection_point < 0:
+		emit_signal("game_over", false, "%人脈ポイントが低くなり過ぎて研究者として成功できませんでした。")
+		return true
+	if university_point < 0:
+		emit_signal("game_over", false, "学内ポイントが低くなり過ぎて研究者として成功できませんでした。")
+		return true
+	if money < 0:
+		emit_signal("game_over", false, "予算執行の問題で大学に迷惑をかけてしまい研究者として成功できませんでした。")
+		return true
+	if 3 < no_paper_in_row:
+		emit_signal("game_over", false, "%d年間論文を発表できませんでした。" % no_paper_in_row)
+		return true
+	return false
+
+func year_end():
+	# wrap up this year
+	var total_papers = 0
+	for n in number_of_papers:
+		total_papers += n
+	var np = number_of_paper_this_year
+	if number_of_paper_this_year == 0:
+		no_paper_in_row += 1
+	else:
+		no_paper_in_row = 0
+	# 年度末でできるだけ使い切る。次年度の収入が見込めるなら赤字は待てる。
+	money /= 2
+	if 0 < number_of_paper_this_year:
+		money += 0.3
+	else:
+		money += 0.5 + pow(university_rank, 1.5) * 0.1
+	if 0 < kaken["year"]:
+		kaken["year"] -= 1
+		money += kaken["money"]
+		if kaken["year"] == 0:
+			kaken_submission["state"] = null
+			kaken["money"] = 0
+	contribution_point += 10 * number_of_postdocs
+	contribution_point += number_of_students
+	# then check it
+	if check_game_condition():
+		print("game over")
+		return
+	# start a new year
+	year += 1
 	university_hour["year"] = university_hour["default"]
 	university_hour["hour"] = university_hour["default"]
 	society_hour["year"] = society_hour["default"]
@@ -272,14 +320,6 @@ func year_end():
 	student_hour["hour"] = student_hour["default"]
 	postdoc_hour["year"] = postdoc_hour["default"]
 	postdoc_hour["hour"] = postdoc_hour["default"]
-	if 0 < kaken["year"]:
-		kaken["year"] -= 1
-		money += kaken["money"]
-		if kaken["year"] == 0:
-			kaken_submission["state"] = null
-			kaken["money"] = 0
-	contribution_point += 10 * number_of_postdocs
-	contribution_point += number_of_students
 	number_of_postdocs = 0
 	number_of_students = 0
 	abroad = false
@@ -288,25 +328,12 @@ func year_end():
 		level_up = true
 		skill_level = min(skill_level + 1, 5)
 	var promoted = false
-	var total_papers = 0
-	for n in number_of_papers:
-		total_papers += n
+	number_of_paper_this_year = 0
 	if rank == 0 and 5 < total_papers:
 		rank = 1
 		level_in_university += 1
 		level_in_society += 1
 		promoted = true
-	# 年度末でできるだけ使い切る。しかし勝手に資金が減るのは解せん
-	money /= 2
-	if 0 < number_of_paper_this_year:
-		money += 0.3
-	else:
-		money += 0.5 + pow(university_rank, 1.5) * 0.1
-	if 0 < kaken["year"]:
-		kaken["year"] -= 1
-		money += kaken["money"]
-	var np = number_of_paper_this_year
-	number_of_paper_this_year = 0
 	if level_up and promoted:
 		return { "kind": 1, "message": "教授に昇進し、研究レベルが上がりました。今年書いた論文は%d本です。" % np }
 	elif level_up:

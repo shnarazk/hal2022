@@ -262,7 +262,7 @@ anchor_bottom = 0.5
 margin_left = 62.0
 margin_top = -572.5
 margin_right = 616.0
-margin_bottom = -489.5
+margin_bottom = -494.5
 rect_min_size = Vector2( 200, 60 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -277,6 +277,36 @@ __meta__ = {
 [node name="EventDisplayTimer" type="Timer" parent="Console/EventHappened"]
 wait_time = 4.0
 one_shot = true
+
+[node name="Decision" type="Node2D" parent="Console"]
+position = Vector2( 1427, -515 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Console/Decision"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AcceptButton" type="Button" parent="Console/Decision/VBoxContainer"]
+margin_right = 90.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 90, 0 )
+text = "承諾"
+expand_icon = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RejectButton" type="Button" parent="Console/Decision/VBoxContainer"]
+margin_top = 35.0
+margin_right = 90.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 90, 0 )
+text = "断る"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="StatusReport" type="RichTextLabel" parent="Console"]
 anchor_left = 0.5
@@ -326,6 +356,46 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Ending" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" type="Button" parent="Ending"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = 150.0
+margin_right = 150.0
+margin_bottom = 216.0
+rect_min_size = Vector2( 300, 0 )
+theme = SubResource( 2 )
+text = "再チャレンジ"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reason" type="Label" parent="Ending"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 100.0
+margin_top = -15.5
+margin_right = -100.0
+margin_bottom = 15.5
+grow_horizontal = 0
+text = "ゲームオーバー"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="event_happened" from="GameSpace/AssistantStage" to="." method="_on_event_happened"]
 [connection signal="event_happened" from="GameSpace/ProfessorStage" to="." method="_on_event_happened"]
 [connection signal="pressed" from="Console/StartButton" to="." method="_on_Button_pressed"]
@@ -335,5 +405,8 @@ __meta__ = {
 [connection signal="pressed" from="Console/Level4Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Console/Level5Button" to="." method="_on_Button_pressed"]
 [connection signal="timeout" from="Console/EventHappened/EventDisplayTimer" to="Console/EventHappened" method="_on_EventDisplayTimer_timeout"]
+[connection signal="pressed" from="Console/Decision/VBoxContainer/AcceptButton" to="." method="_on_AcceptButton_pressed"]
+[connection signal="pressed" from="Console/Decision/VBoxContainer/RejectButton" to="." method="_on_RejectButton_pressed"]
 [connection signal="timeout" from="Console/StatusReport/EventDisplayTimer" to="Console/StatusReport" method="_on_EventDisplayTimer_timeout"]
 [connection signal="pressed" from="OpeningPanel/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="Ending/RestartButton" to="." method="_on_StartButton_pressed"]

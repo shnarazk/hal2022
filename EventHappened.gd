@@ -15,10 +15,11 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func display(message):
+func display(message, no_timer = false):
 	text = message
 	show()
-	$EventDisplayTimer.start()
+	if !no_timer:
+		$EventDisplayTimer.start()
 
 func _on_EventDisplayTimer_timeout():
 	hide()

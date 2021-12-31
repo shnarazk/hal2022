@@ -3,25 +3,34 @@ extends Spatial
 var player = load("model/Player.gd").new()
 var step = 0
 var weeks = 0
+var hanging_event = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
+	$Console/Decision.hide()
+	hanging_event = null
 	$ResearchPanel.hide()
 	$Console/EventHappened.hide()
 	$Console/StatusReport.hide()
 	$GameSpace/ProfessorStage.hide()
+	$Ending.hide()
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
 	update_state_panel()
 	update_research_panel()
+	# add_child(player)
+	# print(get_node("player"))
+	player.connect("game_over", self, "game_over")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
 
 func _on_Button_pressed():
+	if hanging_event != null:
+		return
 	$Console/EventHappened/EventDisplayTimer.stop()
 	$Console/EventHappened.hide()
 	var s = int((rand_range(0, 3.3) * rand_range(0, 3.3)) / 3  + 1)
@@ -57,9 +66,13 @@ func _on_Button_pressed():
 func _on_event_happened(event):
 	#print(event)
 	if event.get("optional", false):
-		var doit = 0.5 < rand_range(0, 1)
-		var e = player.accept_proposal(event, !doit)
-		$Console/EventHappened.display(("とりあえず" if doit else "断ったのは") + e["id"])
+		hanging_event = event
+		$Console/EventHappened.display(hanging_event["id"] + "の依頼がありました。どうしますか？", true)
+		$Console/Decision.show()
+		return
+		# var doit = 0.5 < rand_range(0, 1)
+		# var e = player.accept_proposal(event, !doit)
+		# $Console/EventHappened.display(("とりあえず" if doit else "断ったのは") + e["id"])
 	else:
 		var e = player.accept_proposal(event)
 		$Console/EventHappened.display(e["id"])
@@ -136,3 +149,24 @@ func _on_Level3Button_pressed():
 
 func _on_StartButton_pressed():
 	$OpeningPanel.hide()
+
+func _on_AcceptButton_pressed():
+	var e = player.accept_proposal(hanging_event, false)
+	hanging_event = null
+	$Console/Decision.hide()
+	$Console/EventHappened.display( e["id"])
+	update_research_panel()
+	update_state_panel()
+
+func _on_RejectButton_pressed():
+	var e = player.accept_proposal(hanging_event, true)
+	hanging_event = null
+	$Console/Decision.hide()
+	$Console/EventHappened.display(e["id"])
+	update_research_panel()
+	update_state_panel()
+
+func game_over(finish, message):
+	print("Here we came.")
+	$Ending.show()
+	$Ending/Reason.text = message
