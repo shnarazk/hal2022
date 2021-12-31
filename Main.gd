@@ -121,6 +121,8 @@ func update_state_panel():
 	$StatusPanel/Panel/Status/Personal/Money.text = '%.2f M円' % player.money
 
 func _on_Level1Button_pressed():
+	if hanging_event != null:
+		return
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
@@ -130,6 +132,8 @@ func _on_Level1Button_pressed():
 	update_state_panel()
 
 func _on_Level2Button_pressed():
+	if hanging_event != null:
+		return
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true
@@ -139,6 +143,8 @@ func _on_Level2Button_pressed():
 	update_state_panel()
 
 func _on_Level3Button_pressed():
+	if hanging_event != null:
+		return
 	$Console/Level1Button.disabled = true
 	$Console/Level2Button.disabled = true
 	$Console/Level3Button.disabled = true

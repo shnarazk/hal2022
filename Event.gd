@@ -19,7 +19,7 @@ var events = {
 		},
 		{ "id": "事務員を採用すると雑務が減ります。",
 			"optional": true,
-			"effect": [{ "type": "university_hour_year", "value": -20 }, {"type": "money", "value": -200}],
+			"effect": [{ "type": "university_hour_year", "value": -20 }, {"type": "money", "value": -2}],
 		},
 		{ "id": "格上の大学に移らないか打診がありました。",
 			"optional": true,
