@@ -14,7 +14,7 @@ var events = {
 		null,
 		{ "id": "TVで専門家としてコメントしてください。",
 			"optional": true,
-			"effect": [{ "type": "society_hour_tmp", "value": 10 }, {"type": "contribution_point", "value": 5}],
+			"effect": [{ "type": "society_hour_tmp", "value": 10 }, {"type": "contribution_point", "value": 5}, { "type": "money", "value": 0.1 }],
 			"require": "is_skill_level3",
 		},
 		{ "id": "事務員を採用すると雑務が減ります。",
@@ -50,8 +50,8 @@ var events = {
 		{ "id": "学内研究補助金獲得", "effect": [{ "type": "money", "value": 0.5 } ] },
 		null,
 		{ "id": "地元中小企業から共同研究を打診されました。", "optional": true, "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 2 }] },
-		{ "id": "科研費C申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 2, "money": 1 } ], "require": "not_applied"},
-		{ "id": "科研費A申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 3, "money": 10 } ], "require": "not_applied"},
+		{ "id": "科研費Cの申請をしました。", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 2, "money": 1 } ], "require": "not_applied"},
+		{ "id": "科研費Aの申請をしました。", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 3, "money": 10 } ], "require": "not_applied"},
 		{ "id": "大企業から共同研究を打診されました。", "optional": true, "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "money", "value": 6 }] },
 		{ "id": "科研費の共同研究者になりました。", "effect": [{ "type": "private_hour_year", "value": 50 }, { "type": "kaken_money", "year":2, "money": 1 }], "require": "not_applied" },
 		{ "id": "科研費大型プロジェクトが採択されました。", "effect": [{ "type": "private_hour_year", "value": 100 }, { "type": "kaen_money", "year": 2, "money": 5 } ],
@@ -63,10 +63,10 @@ var events = {
 	],
 	"private": [
 		{ "id": "徹夜を考えています。", "optional": true, "effect": [{ "type": "private_hour_tmp", "value": 20 }] },
-		{ "id": "学生との打ち合わせ", "effect": [{ "type": "student_hour_tmp", "value": 10 }],
+		{ "id": "学生との打ち合わせをしました。", "effect": [{ "type": "student_hour_tmp", "value": 10 }],
 			"require": "has_student"
 		},
-		{ "id": "ポスドクとの打ち合わせ", "effect": [{ "type": "postdoc_hour_tmp", "value": 20 }],
+		{ "id": "ポスドクとの打ち合わせをしました。", "effect": [{ "type": "postdoc_hour_tmp", "value": 20 }],
 			"require": "has_postdoc"
 		},
 		null,
@@ -85,7 +85,7 @@ var events = {
 			"decline": [{"type": "society_point", "value": -3}]
 		},
 		null,
-		{ "id": "学会表彰", "effect": [{ "type": "connection_point", "value": 2}, { "type": "society_point", "value": 3 }]},
+		{ "id": "学会で表彰されました。", "effect": [{ "type": "connection_point", "value": 2}, { "type": "society_point", "value": 3 }]},
 		{ "id": "研究会開催を依頼されました。", "effect": [{ "type": "society_hour_tmp", "value": 50 }, {"type": "society_point", "value": 5}]},
 		{ "id": "国際大会開催を依頼されました。",
 			"optional": true,
@@ -108,7 +108,7 @@ var events = {
 			"decline": [{"type": "university_point", "value": -3}],
 			"require": "is_professor"
 		},
-		{ "id": "国際提携校締結", 
+		{ "id": "国際提携校締結に尽力しました。",
 			"effect": [{ "type": "university_hour_tmp", "value": 100 }, {"type": "university_point", "value": 10}],
 			"require": "is_professor"
 		},

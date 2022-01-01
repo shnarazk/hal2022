@@ -24,13 +24,13 @@ var my_event_type = [
 
 var my_scheduled_event = [
 	# 1月
-	{ "id": "1月卒業研究指導", "effect": [{"type": "university_hour_tmp", "value": 100}],  "require": "has_student" },
+	{ "id": "1月卒業研究の指導をしました。", "effect": [{"type": "university_hour_tmp", "value": 100}],  "require": "has_student" },
 	null,
 	null,
 	null,
 	# 4月
-	{ "id": "4月卒論生受け入れ", "effect": [{ "type": "student_hour_year", "value": 25 }, { "type": "number_of_student", "value": 1 }] },
-	{ "id": "5月卒論生受け入れ",
+	{ "id": "4月卒論生を受け入れました。", "effect": [{ "type": "student_hour_year", "value": 25 }, { "type": "number_of_student", "value": 1 }] },
+	{ "id": "5月卒論生を受け入れました。",
 		"optional": true,
 		"effect": [{ "type": "student_hour_year", "value": 15 }, { "type": "number_of_student", "value": 1 }]
 	},
@@ -41,11 +41,11 @@ var my_scheduled_event = [
 	null,
 	null,
 	null,
-	{ "id": "10月科研費C申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 2, "money": 1 } ], "require": "not_applied"},
-	{ "id": "10月科研費A申請", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 3, "money": 10 } ], "require": "not_applied"},
-	{ "id": "11月修士論文指導", "effect":[{"type": "student_hour_tmp", "value": 100}], "require": "has_student" },
-	{ "id": "12月卒業研究指導", "effect":[{"type": "student_hour_tmp", "value": 100}], "require": "has_student" },
-	{ "id": "12月卒業研究指導", "effect":[{"type": "student_hour_tmp", "value": 100}], "require": "has_student" },
+	{ "id": "10月科研費Cの申請をしました。", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 2, "money": 1 } ], "require": "not_applied"},
+	{ "id": "10月科研費Aの申請をしました。", "effect": [{ "type": "private_hour_tmp", "value": 100}, { "type": "apply_kaken", "wait": 8, "year": 3, "money": 10 } ], "require": "not_applied"},
+	{ "id": "11月修士論文の指導をしました。", "effect":[{"type": "student_hour_tmp", "value": 100}], "require": "has_student" },
+	{ "id": "12月卒業研究の指導をしました。", "effect":[{"type": "student_hour_tmp", "value": 100}], "require": "has_student" },
+	{ "id": "12月卒業研究の指導をしました。", "effect":[{"type": "student_hour_tmp", "value": 100}], "require": "has_student" },
 	null,
 ]
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://font/NotoSansCJKjp-DemiLight.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://art/button-bg.svg" type="Texture" id=3]
+[ext_resource path="res://art/button-bg2.svg" type="Texture" id=4]
 [ext_resource path="res://StatusPanel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://EventHappened.gd" type="Script" id=7]
 [ext_resource path="res://StatusReport.gd" type="Script" id=8]
@@ -100,6 +101,24 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=2]
 default_font = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=25]
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=23]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 356, 92 )
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+expand_margin_top = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="Theme" id=24]
+Button/colors/font_color = Color( 0.152941, 0.0745098, 0.321569, 1 )
+Button/colors/font_color_hover = Color( 1, 1, 1, 1 )
+Button/constants/hseparation = 6
+Button/fonts/font = SubResource( 25 )
+Button/styles/normal = SubResource( 23 )
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 2 )
@@ -283,30 +302,40 @@ wait_time = 4.0
 one_shot = true
 
 [node name="Decision" type="Node2D" parent="Console"]
-position = Vector2( 1427, -515 )
+position = Vector2( 1406, -515 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Console/Decision"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 100.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 100, 80 )
+theme = SubResource( 24 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="AcceptButton" type="Button" parent="Console/Decision/VBoxContainer"]
-margin_right = 90.0
-margin_bottom = 31.0
-rect_min_size = Vector2( 90, 0 )
+margin_right = 100.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 90, 30 )
 text = "承諾"
 expand_icon = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label" type="Label" parent="Console/Decision/VBoxContainer"]
+visible = false
+margin_top = 34.0
+margin_right = 100.0
+margin_bottom = 48.0
+
 [node name="RejectButton" type="Button" parent="Console/Decision/VBoxContainer"]
-margin_top = 35.0
-margin_right = 90.0
-margin_bottom = 66.0
-rect_min_size = Vector2( 90, 0 )
+margin_top = 34.0
+margin_right = 100.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 90, 30 )
 text = "断る"
 __meta__ = {
 "_edit_use_anchors_": false

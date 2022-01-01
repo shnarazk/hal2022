@@ -272,12 +272,15 @@ func turn_end():
 	postdoc_hour["hour"] = postdoc_hour["year"]
 
 func check_game_condition():
+	if 3 < skill_level:
+		emit_signal("game_over", true, "おめでとうございます。目標を達成し立派な研究者として成功しました。")
+		return true
 	if 20 < year:
 		# return {"kind": 2, "message": "十分な実績を残すことができませんでした" }
 		emit_signal("game_over", false, "%d年研究しましたが十分な実績を残すことができませんでした" % year)
 		return true
 	if connection_point < 0:
-		emit_signal("game_over", false, "%人脈ポイントが低くなり過ぎて研究者として成功できませんでした。")
+		emit_signal("game_over", false, "人脈ポイントが低くなり過ぎて研究者として成功できませんでした。")
 		return true
 	if university_point < 0:
 		emit_signal("game_over", false, "学内ポイントが低くなり過ぎて研究者として成功できませんでした。")
@@ -314,6 +317,10 @@ func year_end():
 			kaken["money"] = 0
 	contribution_point += 10 * number_of_postdocs
 	contribution_point += number_of_students
+	var level_up = false
+	if 2 < number_of_papers[skill_level] and 1 < number_of_paper_this_year:
+		level_up = true
+		skill_level = min(skill_level + 1, 5)
 	# then check it
 	if check_game_condition():
 		print("game over")
@@ -333,10 +340,6 @@ func year_end():
 	number_of_postdocs = 0
 	number_of_students = 0
 	abroad = false
-	var level_up = false
-	if 2 < number_of_papers[skill_level] and 1 < number_of_paper_this_year:
-		level_up = true
-		skill_level = min(skill_level + 1, 5)
 	var promoted = false
 	number_of_paper_this_year = 0
 	if rank == 0 and 5 < total_papers:
