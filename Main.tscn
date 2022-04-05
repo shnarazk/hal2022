@@ -1,9 +1,10 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://font/NotoSansCJKjp-DemiLight.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://art/button-bg.svg" type="Texture" id=3]
 [ext_resource path="res://art/button-bg2.svg" type="Texture" id=4]
+[ext_resource path="res://mixkit-8-bit-bomb-explosion-2811.ogg" type="AudioStream" id=5]
 [ext_resource path="res://StatusPanel.tscn" type="PackedScene" id=6]
 [ext_resource path="res://EventHappened.gd" type="Script" id=7]
 [ext_resource path="res://StatusReport.gd" type="Script" id=8]
@@ -429,6 +430,10 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
 
 [connection signal="event_happened" from="GameSpace/AssistantStage" to="." method="_on_event_happened"]
 [connection signal="event_happened" from="GameSpace/ProfessorStage" to="." method="_on_event_happened"]
